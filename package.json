@@ -1,0 +1,33 @@
+{
+  "name": "safeat",
+  "version": "1.0.0",
+  "description": "Sistema web para auxiliar proprietarios de bares e restaurantes do município de São Paulo a se adequarem às normas de funcionamento durante a pandemia",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "covid-19",
+    "restaurantes",
+    "sao",
+    "paulo",
+    "pandemia"
+  ],
+  "author": "Gabriel Rodrigues, Isabella Kuo, Caio valverde, Vinicius Yudi e Gabriel Kendy Faria Komatsu",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "cookie-session": "^1.4.0",
+    "csurf": "^1.11.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.0",
+    "express-mongo-db": "^2.0.4",
+    "moment": "^2.29.1",
+    "mongodb": "^3.6.2",
+    "nodemon": "^2.0.6",
+    "passport": "^0.4.1"
+  }
+}
