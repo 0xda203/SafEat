@@ -13,6 +13,12 @@ module.exports = handlebars({
             this._sections[name] = options.fn(this);
             return null;
         },
+        invert: function(orientation) {
+            return orientation == 'left' ? 'right' : 'left';
+        },
+        json: function(data) {
+            return JSON.stringify(data);
+        }
     },
     extname: '.hbs'
 })

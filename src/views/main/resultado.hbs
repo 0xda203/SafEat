@@ -1,0 +1,279 @@
+{{#section 'css'}}
+<style>
+    #overlay {
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0.733);
+        width: 100vw;
+        display: flex;
+        height: 100vh;
+        z-index: 999;  
+    }
+
+    .inner {
+        margin: auto;
+    }
+
+    #chart {
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    .zoom {
+        animation: zoominoutsinglefeatured 2s ;
+    }
+
+    .gauge .background {
+        fill: #ddd;
+    }
+
+    .gauge .value {
+        fill: #777;
+        font-size: 1.5rem;
+    }
+
+    .gauge .value tspan {
+        font-size: 1rem;
+    }
+
+    .gauge .scale text {
+        fill: #999;
+        font-size: 0.75rem;
+    }
+
+    .intro-section {
+        height: 100vh;
+        padding-top: 120px;
+    }
+
+    .background-shape::before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -100px;
+    width: 100vw;
+    height: 100vh;
+    background: url("/img/shape-left.png") left center no-repeat;
+    background-size: cover;
+    content: "";
+    z-index: -1;
+}
+
+    @media (max-width: 767px) {
+        .intro-section .container2 .txt {
+            padding-left: 0 !important;
+            margin-top: 0 !important;
+        }
+        .intro-section .container2 .img {
+            display: none;
+        }
+}
+
+    @media (min-width: 768px) and (max-width: 1350px) {
+        .intro-section .container2 .text-area h1:nth-child(1) {
+            font-size: 2rem !important;
+        }
+
+    }
+
+    .intro-section .container2 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .intro-section .container2 .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .intro-section .container2 .text-area h1 {
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+        letter-spacing: 0.04em;
+        font-weight: 900;
+        color: #140779;
+        text-transform: uppercase;
+    }
+
+    .intro-section .container2 ul {
+        list-style: none;
+        margin-top: 20px;
+    }
+
+    .intro-section .container2 ul li {
+        font-weight: 500;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .intro-section .container2 ul li a {
+        color: black;
+    }
+
+
+    .intro-section .container2 .txt {
+        margin-top: 0;
+    }
+
+    .intro-section .container2 .img {
+        margin-top: 70px;
+        padding-right: 30px;
+        padding-left: 40px;
+    }
+
+
+    .intro-section .container2 .text-area h1:nth-child(1) {
+        margin-bottom: 0px;
+        font-size: 2.5em;
+    }
+
+    @keyframes zoominoutsinglefeatured {
+    0% {
+        transform: scale(1,1);
+    }
+    50% {
+        transform: scale(1.2,1.2);
+    }
+    100% {
+        transform: scale(1,1);
+    }
+}
+
+</style>
+{{/section}}
+
+<div id="overlay">
+    <div class="inner">
+        <div id="chart"></div>
+    </div>
+</div>
+<section class="intro-section">      
+    <div class="container2">
+        <div class="row align-items-center text center text-md-left">
+            <div class="col-md-6 col-lg-7 col-xl-6 img" data-aos="fade-left">
+                {{!-- <img class="img-fluid" src="/img/running-covid.png"> --}}
+            </div>
+            <div class="col-md-5 col-lg-5 mb-6 mb-md-0 txt" data-aos="fade-up">
+                <div class="text-area">
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+{{#section 'jquery'}}
+<script src='https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+<script src="https://d3js.org/d3.v3.js"></script>
+
+
+<script>
+    $("#top").css("display", "flex");
+
+
+    $(function () {
+
+
+            function arcTween(transition, v) {
+        var newAngle = v / 100 * Math.PI - Math.PI / 2;
+        transition.attrTween('d', function(d) {
+            var interpolate = d3.interpolate(d.endAngle, newAngle);
+            return function(t) {
+                d.endAngle = interpolate(t);
+                return arc(d);
+            };  
+        });
+    }
+
+    function textTween(transition, v) {
+        transition.tween('text', function() {
+            var interpolate = d3.interpolate(this.innerHTML, v),
+                split = (v + '').split('.'),
+                round = (split.length > 1) ? Math.pow(10, split[1].length) : 1;
+            return function(t) {
+                this.innerHTML = d3.format('.1f')(Math.round(interpolate(t) * round) / round) + '<tspan></tspan>';
+            };
+        });
+    }
+
+    function update(v) {
+        v = d3.format('.1f')(v);
+        foreground.transition()
+            .duration(750)
+            .style('fill', function() {
+                return color(v);
+            })
+            .call(arcTween, v);
+
+        value.transition()
+            .duration(750)
+            .call(textTween, v);
+    }
+
+        var size = 150, thickness = 60;
+
+        var color = d3.scale.linear()
+            .domain([0, 50, 100])
+            .range(['#db2828', '#fbbd08', '#21ba45']);  
+        // COMENTARIO #db2828- vermelho #21ba45-verde
+
+        var arc = d3.svg.arc()
+            .innerRadius(size - thickness)
+            .outerRadius(size)
+            .startAngle(-Math.PI / 2);
+
+        var svg = d3.select('#chart').append('svg')
+            .attr('width', size * 2)
+            .attr('height', size + 20)
+            .attr('class', 'gauge');
+
+        var chart = svg.append('g')
+            .attr('transform', 'translate(' + size + ',' + size + ')')
+
+        var background = chart.append('path')
+            .datum({
+                endAngle: Math.PI / 2
+            })
+            .attr('class', 'background')
+            .attr('d', arc);
+
+        var foreground = chart.append('path')
+            .datum({
+                endAngle: -Math.PI / 2  
+            })
+            .style('fill', '#db2828')
+            .attr('d', arc);
+
+        var value = svg.append('g')
+            .attr('transform', 'translate(' + size + ',' + (size * .9) + ')')
+            .append('text')
+            .text(0)
+            .attr('text-anchor', 'middle')
+            .attr('class', 'value');
+
+        var scale = svg.append('g')
+            .attr('transform', 'translate(' + size + ',' + (size + 15) + ')')
+            .attr('class', 'scale');
+
+        scale.append('text')
+            .text(100)
+            .attr('text-anchor', 'middle')
+            .attr('x', (size - thickness / 2));
+
+        scale.append('text')
+            .text(0)
+            .attr('text-anchor', 'middle')
+            .attr('x', -(size - thickness / 2));
+       
+        setTimeout(async () => {
+               await $("#top").fadeOut(1000); // fadeout no loader
+               setInterval(function() {
+                update({{percentage}});
+                $('#chart').addClass('zoom')
+            }, 1000);
+        }, 2000);
+
+    });       
+</script>
+{{/section}}

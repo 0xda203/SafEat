@@ -1,6 +1,11 @@
 {{#section 'css'}}
 <link rel="stylesheet" href='https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css'>
 <style>       
+
+    body {
+        overflow: hidden;
+    }
+
     .swal2-popup {
         font-size: 1em;
     }
@@ -24,13 +29,20 @@
     text-align: right;
 }
 
+.input-resposta:focus {
+    
+}
+
  .section-padding {
-     padding-top: 100px;
+     padding-top: 130px;
      padding-bottom: 100px;
  }
 
- .question-content {
-     
+ .progress-wrapper {
+    width: 100%;
+    position: absolute;
+    margin-top: 3px;
+    bottom: 1px;
  }
 
  .question-content h1 {
@@ -39,102 +51,169 @@
     text-transform: uppercase;
     color: #140779;
     font-weight: 900;
-    font-size: 3em;
+    font-size: 2.5em;
  }
 
- 
+  .background-shape::before {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: -100px;
+    width: 100vw;
+    height: 100%;
+    background: url("/img/shape-left.png") left center no-repeat;
+    background-size: cover;
+    content: "";
+    z-index: -1;
+}
+
+.modifier-after::after {
+  display: block !important;
+}
+
+.modifier-before::before {
+  display: block !important;
+}
+
+.img-next:hover {
+ -webkit-animation: jiggle .3s ease-out;
+          animation: jiggle .3s ease-out;   
+}
+
+@keyframes jiggle {
+  15%,40%,75%,100% {
+    -webkit-transform-origin: center center;
+            transform-origin: center center;
+  }
+  15% {
+    -webkit-transform: scale(1.4, 1.2);
+            transform: scale(1.4, 1.2);
+  }
+  40% {
+    -webkit-transform: scale(0.9, 0.9);
+            transform: scale(0.9, 0.9);
+  }
+  75% {
+    -webkit-transform: scale(1.08, 1);
+            transform: scale(1.08, 1);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+  }
+}
+
+ .background-shape::after {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: -100px;
+    width: 100vw;
+    height: 100%;
+    background: url("/img/shape-right2.png") left center no-repeat;
+    background-size: cover;
+    content: "";
+    z-index: -1;
+}
+
+ .option {
+    width: 30%;
+    /* padding: 0 70px; */
+    font-size: 24px;
+ }
 
 </style>
 {{/section}}
 
-<section id="question-1" class="covid-section section-padding">      
+{{#each questions}}
+<section id="question-{{@index}}" class="covid-section section-padding">      
         <div class="container">
             <div class="row">
-                {{!-- <div id="question-1"> --}}
+                    {{#is this.orientation 'right'}}
                     <div class="col-lg-6 col-md-6 align-self-center question-content" style="margin-right: -40px;"  data-aos="fade-up">
                         <form>
-                            <h1>QUAL A CAPACIDADE HABITUAL DO SEU ESTABELECIMENTO?</h1>
-                            <p style="text-align: center;"><input class="input-resposta" required></p>
-                            <p style="text-align: right;"><img class="img-next" id="next" alt="Proximo" src="/img/next.png"></p>
+                            <h1>{{this.question}}</h1>
+                            {{#is this.method 'VF'}}
+                            <div>
+                                <div class="row">
+                                    <div class="col-sm-12 text-center" style="margin-top: 40px;">
+                                        <button class="btn btn-success btn-md center-block option mr-3 btn-next" >SIM</button>
+                                        <button class="btn btn-danger btn-md center-block option btn-next" >NÃO</button>
+                                    </div>
+                                </div>
+                            </div>
+                            {{else}}
+                            <p style="text-align: center;"><input id='input-resposta{{@index}}' type="{{this.type}}" class="input-resposta" required></p>
+                            <p style="text-align: right;"><img class="img-next" alt="Proximo" src="/img/next.png"></p>
+                            {{/is}}
                         </form>
-                    </div>
-                    <div class="col-lg-6 col-md-6 mb-4 mb-md-0" data-aos="fade-right">
+                    </div> 
+                    {{/is}}
+
+                    <div class="col-lg-6 col-md-6 mb-4 mb-md-0" data-aos="fade-{{this.orientation}}">
                         <div>
-                            <img class="img-fluid" style="margin-left: 60px;" src="/img/perguntas/people1.svg">
+                            <img class="img-fluid" style="margin-{{invert this.orientation}}: 60px;" src="{{this.illustration}}">
                         </div>
-                    </div>   
-                {{!-- </div> --}}
-                {{!-- <div id="question-2" style="display: none;">
-                    <div class="col-lg-6 col-md-6 mb-4 mb-md-0" data-aos="fade-left">
-                        <div>
-                            <img class="img-fluid" style="margin-left: 60px;" src="/img/perguntas/people1.svg">
-                        </div>
-                    </div>   
+                    </div>  
+
+                    {{#is this.orientation 'left'}}
                     <div class="col-lg-6 col-md-6 align-self-center question-content" style="margin-left: -40px;"  data-aos="fade-up">
                         <form>
-                            <h1>QUAL A CAPACIDADE HABITUAL DO SEU ESTABELECIMENTO?</h1>
-                            <p style="text-align: center;"><input class="input-resposta" required></p>
+                            <h1>{{this.question}}</h1>
+                            {{#is this.method 'VF'}}
+                            <div>
+                                <div class="row">
+                                    <div class="col-sm-12 text-center" style="margin-top: 40px;">
+                                        <button class="btn btn-success btn-md center-block option mr-3 btn-next" >SIM</button>
+                                        <button class="btn btn-danger btn-md center-block option btn-next" >NÃO</button>
+                                    </div>
+                                </div>
+                            </div>
+                            {{else}}
+                            <p style="text-align: center;"><input id='input-resposta{{@index}}' type="{{this.type}}" class="input-resposta" required></p>
                             <p style="text-align: right;"><img class="img-next" alt="Proximo" src="/img/next.png"></p>
+                            {{/is}}
                         </form>
-                    </div>
+                    </div> 
+                    {{/is}}
                     
-                </div>             --}}
+                    
             </div>
         </div>
     </section>
+{{/each}}
 
-    <section id="question-2" style="display: none;" class="covid-section section-padding">      
-        <div class="container">
-            <div class="row">
-                {{!-- <div id="question-1"> --}}
-                    <div class="col-lg-6 col-md-6 align-self-center question-content" style="margin-right: -40px;"  data-aos="fade-up">
-                        <form>
-                            <h1>QUAL A CAPACIDADE HABITUAL DO SEU ESTABELECIMENTO?</h1>
-                            <p style="text-align: center;"><input class="input-resposta" required></p>
-                            <p style="text-align: right;"><img class="img-next" id="next" alt="Proximo" src="/img/next.png"></p>
-                        </form>
-                    </div>
-                    <div class="col-lg-6 col-md-6 mb-4 mb-md-0" data-aos="fade-right">
-                        <div>
-                            <img class="img-fluid" style="margin-left: 60px;" src="/img/people.png">
-                        </div>
-                    </div>   
-                {{!-- </div> --}}
-                {{!-- <div id="question-2" style="display: none;">
-                    <div class="col-lg-6 col-md-6 mb-4 mb-md-0" data-aos="fade-left">
-                        <div>
-                            <img class="img-fluid" style="margin-left: 60px;" src="/img/perguntas/people1.svg">
-                        </div>
-                    </div>   
-                    <div class="col-lg-6 col-md-6 align-self-center question-content" style="margin-left: -40px;"  data-aos="fade-up">
-                        <form>
-                            <h1>QUAL A CAPACIDADE HABITUAL DO SEU ESTABELECIMENTO?</h1>
-                            <p style="text-align: center;"><input class="input-resposta" required></p>
-                            <p style="text-align: right;"><img class="img-next" alt="Proximo" src="/img/next.png"></p>
-                        </form>
-                    </div>
-                    
-                </div>             --}}
-            </div>
-        </div>
-    </section>
 
-<div style="width: 100%; margin-top: 1px;">
+<div class="progress-wrapper">
     <div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="70"
-  aria-valuemin="0" aria-valuemax="100" style="width:70%; background-color: #FAA94A;">
-    70%
-  </div>
-</div>
+        <div class="progress-bar" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="background-color: #FAA94A;">
+        </div>
+    </div>
 </div>
 
 
 
 {{#section 'jquery'}}
 <script src='https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+
 <script>
+    function updateProgress(value) {
+        $('#progress').css('width', `${value}%`);
+        $('#progress').text(`${value}%`);
+    }
+
     $("#top").css("display", "flex");
     $(function () {
+        
+        var currentQuestion = 0;
+        var questions = JSON.parse('{{{json questions}}}');
+        var progress = 0;
+
+        for (let i = 1; i <questions.length; i++) {
+            $(`#question-${i}`).css('display', 'none'); // hide
+        }
+
         setTimeout(() => {
             $("#top").fadeOut(1000);
             setTimeout(() => {
@@ -146,11 +225,106 @@
             }, 1200);
         }, 2000);
 
-        $('#next').click(() => {
-            $('#question-1').fadeOut(1000, function() {
-               $('#question-2').fadeIn(1000);
-            });
+        $('.btn-next').click(async(e) => {  
+            e.preventDefault();
+
+             $(this).prop("disabled",true);  
+            $(this).closest('button').prop("disabled",true);  
+
+            questions[currentQuestion].answer = e.target.innerHTML;    
+
+            if (currentQuestion + 1 == questions.length) {
+                updateProgress('100');
+
+                Swal.fire(
+                    'Obrigado!',
+                    'Obrigado por responder ao nosso questionário, aguarde alguns instantes enquanto processamos suas respostas!',
+                    'success'
+                );                 
+
+                for (let i = 0; i < questions.length; i++) {
+                    delete questions[i].method;
+                    delete questions[i].illustration;   
+                    delete questions[i].orientation;
+                    delete questions[i].bgShape;
+                }
+
+                axios.post('/questionario', {questions: questions}).then((res) => {
+                    setTimeout(() => {
+                        window.location.replace(`/questionario/${res.data.id}`);
+                    }, 500);
+                });
+
+                return false;
+            }
+
+           progress = Math.round(progress + 100/questions.length);
+            updateProgress(progress);
+
+             if (questions[currentQuestion].bgShape) {
+                document.querySelector('.background-shape').classList.add(questions[currentQuestion].orientation == 'left' ? 'modifier-before' : 'modifier-after'); 
+            } else {
+                document.querySelector('.background-shape').classList.remove('modifier-after'); 
+                document.querySelector('.background-shape').classList.remove('modifier-before'); 
+            }
+                        
+            await $(`#question-${currentQuestion++}`).fadeOut(1000);
+            $(`#question-${currentQuestion}`).fadeIn(1000);
+            
              
+        });
+        
+        $('.img-next').click(async() => {
+            if ($(`#input-resposta${currentQuestion}`).val().trim() == '') { // resposta vazia
+                Swal.fire(
+                    'Atenção!',
+                    'Não deixe a resposta em branco!',
+                    'warning'
+                );    
+                return false;
+            }
+
+            
+            questions[currentQuestion].answer = $(`#input-resposta${currentQuestion}`).val();
+
+            if (currentQuestion + 1 == questions.length) {
+
+                updateProgress('100');
+
+                Swal.fire(
+                    'Obrigado!',
+                    'Obrigado por responder ao nosso questionário, aguarde alguns instantes enquanto processamos suas respostas!',
+                    'success'
+                ); 
+
+                for (let i = 0; i < questions.length; i++) {
+                    delete questions[i].method;
+                    delete questions[i].illustration;
+                    delete questions[i].orientation;
+                    delete questions[i].bgShape;
+                }
+
+                axios.post('/questionario', {questions: questions}).then((res) => {
+                    setTimeout(() => {
+                        window.location.replace(`/questionario/${res.data.id}`);
+                    }, 500);
+                });
+
+                return false;
+            }
+
+            await $(`#question-${currentQuestion++}`).fadeOut(1000);
+            $(`#question-${currentQuestion}`).fadeIn(1000);
+            progress = Math.round(progress + 100/questions.length);
+            updateProgress(progress);
+
+            if (questions[currentQuestion].bgShape) {
+                document.querySelector('.background-shape').classList.add(questions[currentQuestion].orientation == 'left' ? 'modifier-before' : 'modifier-after'); 
+            } else {
+                document.querySelector('.background-shape').classList.remove('modifier-after'); 
+                document.querySelector('.background-shape').classList.remove('modifier-before'); 
+            }
+
         });
        
     });
