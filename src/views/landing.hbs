@@ -5,56 +5,237 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+
+    <title>SafEat</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" 
+            integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="/css/landing.css">
-
 </head>
 
 <body class="background-shape">
-
-    <header class="header">
+ 
+   <header id="header" class="header">
         <div class="main-menu">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container">
                     <a class="navbar-brand logo" href="/">
                         <img class="" alt="logo" src="/img/logo.svg">
                     </a>
-                    <div class="collapse navbar-collapse offset">
+                    <div class="collapse-2 navbar-collapse offset">
                         <ul class="nav navbar-nav menu-nav justify-content-end">
                             <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">covid</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">prevenção</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">restaurantes</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">faq</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#covid">covid</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#prevention">prevenção</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#restaurants">restaurantes</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#faq">faq</a></li>
                         </ul>
                         <div class="nav-right text-center text-lg-right py-4 py-lg-0">
-                            <a class="nav-item">Login</a>
+                            <a class="aux">LOGIN</a>
                             <a class="button">Cadastre-se</a>
                         </div>
                     </div>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                 </div>
             </nav>
+            <diV class="collapse" id="navbarToggleExternalContent"  style="padding: 0;">
+                <div>
+                    <div class="bg-dark">
+                        <div class="menu">
+                            <ul>
+                                <li><a href="/">HOME</a></li>
+                                <li><a href="#covid">COVID</a></li>
+                                <li><a>PREVENÇÃO</a></li>
+                                <li><a>RESTAURANTES</a></li>
+                                <li><a>FAQ</a></li>
+                                <li><a>LOGIN</a></li>
+                                <li><a>CADASTRE-SE</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </diV>
+            
         </div>
     </header>
 
+    <section class="intro-section">      
+        <div class="container2">
+            <div class="row align-items-center text center text-md-left">
+                <div class="col-md-5 col-lg-5 mb-5 mb-md-0 txt" data-aos="fade-up">
+                    <div class="text-area">
+                        <h1>INSTRUÇÕES PARA</h1>
+                        <h1>PREVENÇÃO DO</h1>
+                        <h1>COVID-19</h1>
+                        <h2>em bares e restaurantes</h2>
+                        <h2>no município de São Paulo</h2>
+                    </div>
+                    <div class="register-button">
+                        <a>CADASTRE-SE</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-7 col-xl-7 img" data-aos="fade-up">
+                    <img class="img-fluid" src="/img/person.png">
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class ="div-land">
-<h2 class="h2-first"> INSTRUÇÕES PARA</h2>
-    <h2 class="h2-first"> PREVENÇÃO DO</h2>
-    <p class="p-Covid">COVID-19</p>
-    <h3 class="h3-landing">em bares e restaurantes </h3>
-    <h3 class="h3-landing">no município de São Paulo</h3>
-    <button type="button" , class="button-1"> CADASTRE-SE</button>
-</div>
-    
+    <section id="covid" class="covid-section bg-gray section-padding">      
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 mb-4 mb-md-0" data-aos="fade-left">
+                    <div class="covid-img">
+                        <img src="/img/running-covid2.png">
+                    </div>
+                </div>
 
-    <img class="img-landing" alt="person" src="/img/person.svg">
-    <img class="img-landingblob" alt="bloblaranja" src="/img/bloblaranja.svg"  >
-    <img class="img-landingbubles" alt="bubles" src="/img/bubbles 1.svg">
+                <div class="col-lg-5 col-md-6 align-self-center covid-content" data-aos="fade-up">
+                    <h2>Entenda mais<br class="d-none d-xl-block"> sobre o COVID-19</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam velit nulla, ultrices eget pretium non, sodales nec purus. Sed mattis quam sed egestas ultricies. Sed sagittis diam nec dignissim porta. Maecenas mattis sagittis augue, at gravida ipsum posuere et. Aenean ut eros in leo ultricies dictum eget dignissim nunc. Aliquam libero felis, elementum eget eleifend at, laoreet sit amet eros. Suspendisse potenti.</p>
+                    <a class="button" href="#">Saiba mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="prevention" class="covid-section bg-blue section-padding">      
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-md-6 align-self-center covid-content"  data-aos="fade-up">
+                    <h2>Como previnir o seu restaurante do COVID-19?</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam velit nulla, ultrices eget pretium non, sodales nec purus. Sed mattis quam sed egestas ultricies. Sed sagittis diam nec dignissim porta. Maecenas mattis sagittis augue, at gravida ipsum posuere et. Aenean ut eros in leo ultricies dictum eget dignissim nunc. Aliquam libero felis, elementum eget eleifend at, laoreet sit amet eros. Suspendisse potenti.</p>
+                    <a class="button" href="#">Saiba mais</a>
+                </div>
+                <div class="col-lg-7 col-md-6 mb-4 mb-md-0" data-aos="fade-right">
+                    <div class="prevention-img">
+                        <img src="/img/prevention.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="restaurants" class="covid-section bg-gray section-padding"  >      
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 mb-4 mb-md-0" data-aos="fade-left">
+                    <div class="covid-img">
+                        <img src="/img/restaurants.png">
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-6 align-self-center covid-content"  data-aos="fade-up">
+                    <h2>Por que agir segundo as normas é importante?    </h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam velit nulla, ultrices eget pretium non, sodales nec purus. Sed mattis quam sed egestas ultricies. Sed sagittis diam nec dignissim porta. Maecenas mattis sagittis augue, at gravida ipsum posuere et. Aenean ut eros in leo ultricies dictum eget dignissim nunc. Aliquam libero felis, elementum eget eleifend at, laoreet sit amet eros. Suspendisse potenti.</p>
+                    <a class="button" href="#">Saiba mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <section id="faq" class="faq bg-white section-padding">
+      <div class="container">
+
+        <div class="section-title">
+          <h1>FREQUENTLY ASKED QUESTIONS (FAQ)</h1>
+          <p>Tem alguma dúvida? Cheque nossas respostas para as perguntas mais frequentes!</p>
+        </div>
+
+        <div class="accordion-list">
+          <ul>
+            <li data-aos="fade-up">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" class="collapse"
+                href="#accordion-list-1">Este protocolo será mantido até o fim do período de isolamento social? <i
+                  class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="accordion-list-1" class="collapse show" data-parent=".accordion-list">
+                <p>
+                  Sim, o protocolo será mantido até o final do período de isolamento social. Mudanças, porém, caso necessárias, serão protocoladas pela Abrasel (Associação Brasileira de Bares e Restaurantes) e dependerão de assinatura do prefeito municipal para entrarem em vigor.
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="100">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#accordion-list-2"
+                class="collapsed">Quais riscos correm meu estabelecimento caso não esteja de acordo com o protocolo de funcionamento? <i
+                  class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="accordion-list-2" class="collapse" data-parent=".accordion-list">
+                <p>
+                  Interdição e pagamento de multa de R$ 9.231,65, aplicada a cada 250m². De acordo com a Secretaria Municipal das Subprefeituras de São Paulo, desde o início da quarentena, 1.001 estabelecimentos foram interditados por descumprirem as regras vigentes. Destes, 600 são bares, restaurantes, lanchonetes e cafeterias.                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="200">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#accordion-list-3"
+                class="collapsed">O que fazer caso meu estabelecimento seja interditado? <i
+                  class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="accordion-list-3" class="collapse" data-parent=".accordion-list">
+                <p>
+                  Uma solicitação de desinterdição formal deve ser apresentada à subprefeitura da região de onde se encontra o estabelecimento.
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="300">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#accordion-list-4"
+                class="collapsed">Qual deve ser o horário de funcionamento dos restaurantes? <i
+                  class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="accordion-list-4" class="collapse" data-parent=".accordion-list">
+                <p>
+                  A cena de bares e restaurante só pode ser aberto até as 17h. Em outras cidades da região metropolitana, porém, isso já é diferente. As prefeituras de Santo André e São Caetano do Sul, por exemplo, autorizaram a ampliação dos horários de funcionamento.
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="400">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#accordion-list-5"
+                class="collapsed">Quem são os responsáveis pelo novo protocolo? <i
+                  class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="accordion-list-5" class="collapse" data-parent=".accordion-list">
+                <p>
+                  Associação Brasileira de Bares e Restaurantes é a instituição responsável por desenvolver o protocolo. Sua implementação, a nível municipal, depende, porém, de aprovação por parte do Sindicato de Restaurantes e Bares de São Paulo e do governo municipal.
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="500">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#accordion-list-6"
+                class="collapsed">Preciso de algum certificado para voltar a funcionar? <i
+                  class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="accordion-list-6" class="collapse" data-parent=".accordion-list">
+                <p>
+                  Não precisa, apenas siga os protocolos corretamente e fique atento(a) às atualizações das autoridades locais quanto à reabertura.
+                </p>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <footer id="footer">
+        <div class="container">
+        <div class="copyright">
+            &copy; Trabalho destinado à disciplina de RP2, implementado pelo grupo 3 - <strong><span>SafEat</span></strong>.
+        </div>
+        <div class="credits">
+            <a href="/admin"><i class='bx bx-lock' ></i> Área do administrador</a>
+        </div>
+        </div>
+    </footer>
+
+    <button onclick="topFunction()" id="scrollToTop"><i class='bx bxs-up-arrow-alt'></i></button>
+
+    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -64,7 +245,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous"></script>
     <script src="/js/landing.js"></script>
+    
 </body>
 
 </html>

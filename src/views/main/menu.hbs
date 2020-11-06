@@ -1,0 +1,111 @@
+{{#section 'css'}}
+<style>
+    .intro-section {
+        height: 100vh;
+        padding-top: 120px;
+    }
+
+    .background-shape::before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -100px;
+    width: 100vw;
+    height: 100vh;
+    background: url("/img/shape-left.png") left center no-repeat;
+    background-size: cover;
+    content: "";
+    z-index: -1;
+}
+
+    @media (max-width: 767px) {
+        .intro-section .container2 .txt {
+            padding-left: 0 !important;
+            margin-top: 0 !important;
+        }
+        .intro-section .container2 .img {
+            display: none;
+        }
+}
+
+    @media (min-width: 768px) and (max-width: 1350px) {
+        .intro-section .container2 .text-area h1:nth-child(1) {
+            font-size: 2rem !important;
+        }
+
+    }
+
+    .intro-section .container2 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .intro-section .container2 .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .intro-section .container2 .text-area h1 {
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+        letter-spacing: 0.04em;
+        font-weight: 900;
+        color: #140779;
+        text-transform: uppercase;
+    }
+
+    .intro-section .container2 ul {
+        list-style: none;
+        margin-top: 20px;
+    }
+
+    .intro-section .container2 ul li {
+        font-weight: 500;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .intro-section .container2 ul li a {
+        color: black;
+    }
+
+
+    .intro-section .container2 .txt {
+        margin-top: 0;
+    }
+
+    .intro-section .container2 .img {
+        margin-top: 70px;
+        padding-right: 30px;
+        padding-left: 40px;
+    }
+
+
+    .intro-section .container2 .text-area h1:nth-child(1) {
+        margin-bottom: 0px;
+        font-size: 2.5em;
+    }
+
+</style>
+{{/section}}
+
+<section class="intro-section">      
+    <div class="container2">
+        <div class="row align-items-center text center text-md-left">
+            <div class="col-md-6 col-lg-7 col-xl-6 img" data-aos="fade-left">
+                <img class="img-fluid" src="/img/running-covid.png">
+            </div>
+            <div class="col-md-5 col-lg-5 mb-6 mb-md-0 txt" data-aos="fade-up">
+                <div class="text-area">
+                    <h1>O que você deseja fazer?</h1>
+                    <ul>
+                        <li><i class='bx bxs-tag-alt' style="margin-right: 10px; color: #ed7e43"></i><a href="/questionario">VERIFICAR SE MEU RESTAURANTE ESTÁ DE ACORDO COM O PROTOCOLO VIGENTE</a></li>
+                        <li><i class='bx bxs-tag-alt' style="margin-right: 10px; color: #ed4943"></i><a href="/#faq">IR à SEÇÃO DE PERGUNTAS MAIS FREQUENTES</a></li>
+                        <li><i class='bx bxs-tag-alt' style="margin-right: 10px; color: #4362ed"></i><a >ACESSAR FORUM</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>

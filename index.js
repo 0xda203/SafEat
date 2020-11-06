@@ -35,8 +35,12 @@ app.get(`/`, async(req, res) => {
     res.render(`landing`, { layout: null });
 });
 
-app.get(`/principal`, async(req, res) => {
-    res.render(`principal`, { layout: null });
+app.get(`/menu`, async(req, res) => {
+    res.render(`main/menu`);
+});
+
+app.get(`/questionario`, async(req, res) => {
+    res.render(`main/questionario`);
 });
 
 const PORT = process.env.PORT || 9000;

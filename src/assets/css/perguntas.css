@@ -1,0 +1,65 @@
+.p-principal {
+    position: absolute;
+    width: 608px;
+    height: 173px;
+    left: 94px;
+    top: 104px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 55px;
+    line-height: 82px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #140779;
+}
+
+.input-resposta {
+    position: absolute;
+    width: 544px;
+    height: 72px;
+    left: 120px;
+    top: 425px;
+    background: #FFFFFF;
+    border: 1px solid #FD1919;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.img-1 {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    left: 922px;
+    top: 60px;
+}
+
+.img-next {
+    position: absolute;
+    /* width: 600px;
+    height: 600px;*/
+    left: 590px;
+    top: 535px;
+}
+
+.p-next {
+    position: absolute;
+    width: 152px;
+    height: 64px;
+    left: 945px;
+    top: 832px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 25px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    color: #000000;
+}
