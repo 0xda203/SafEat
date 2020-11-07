@@ -1,0 +1,84 @@
+<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+    <thead class="bg-light">
+        <tr>
+            <th>Pergunta</th>
+            <th>Método</th>
+            <th>Tipo</th>
+            <th>Ilustração</th>
+            <th>Orientação</th>
+            <th>Peso</th>
+            <th>Shape de fundo</th>
+            <th>Opções</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr class="{{@index}}">
+            <td>{{this.question}}</td>
+            <td>{{this.method}}</td>
+            <td>{{this.type}}</td>
+            <td><a href="{{this.illustration}}">Acessar</a></td>
+            <td>{{this.orientation}}</td>
+            <td>{{this.weight}}</td>
+            <td>{{this.bgShape}}</td>
+            <td class="text-center">
+                <a href="/admin/questionario/{{this._id}}"><i class="fas fa-cog" title="Editar Pergunta"></i></a>
+                <a class="remove" href="/admin/questionario/delete/{{this._id}}"><i class="fas fa-minus-circle"
+                        title="Apagar Pergunta"></i></a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{#section 'jquery'}}
+<script src="/js/dataTable.js"></script>
+<script>
+
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    $(function () {
+        $('#dataTable tbody').on('click', 'i.fa-minus-circle', function (e) {
+            e.preventDefault();
+            if (confirm("Confirma a remoção?")) {
+                var action = $(this).closest('.remove')[0].href;
+                var $row = $(this).closest('tr');
+                $.ajax({
+                    url: action,
+                    type: 'GET',
+                    success: function (data) {
+                        if (data.success) {
+                            toastr.success('Pergunta deletada com sucesso!', 'Sucesso!')
+                            table.row($row).remove().draw(false);
+                        } else {
+                            toastr.error('Algum erro ocorreu... Tente novamente mais tarde!', 'Erro!');
+                        }
+                    },
+                    error: function () {
+                        toastr.error('Algum erro ocorreu... Tente novamente mais tarde!', 'Erro!');
+                    }
+                });
+            } else {
+                return;
+            }
+
+        });
+    });
+</script>
+
+{{/section}}

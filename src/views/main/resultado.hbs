@@ -266,11 +266,11 @@
             .attr('text-anchor', 'middle')
             .attr('x', -(size - thickness / 2));
        
-        setTimeout(async () => {
-               await $("#top").fadeOut(1000); // fadeout no loader
-               setInterval(function() {
+        settimeout(async () => {
+               await $("#top").fadeout(1000); // fadeout no loader
+               setinterval(function() {
                 update({{percentage}});
-                $('#chart').addClass('zoom')
+                $('#chart').addclass('zoom')
             }, 1000);
         }, 2000);
 

@@ -37,6 +37,28 @@ app.get(`/`, async(req, res) => {
     res.render(`landing`, { layout: null });
 });
 
+app.get(`/admin`, async(req, res) => {
+    return res.redirect('/admin/questionario');
+});
+
+app.route('/admin/questionario/new')
+    .get(async(req, res) => {
+        res.render('admin/questionario/novapergunta', {
+            layout: "admin/admin-template"
+        });
+    }).post(async(req, res) => {
+        await req.db.collection('questions').insertOne(req.body);
+        res.send({ success: true });
+    });
+
+app.get('/admin/questionario', async(req, res) => {
+    var questions = await req.db.collection('questions').find({}).toArray();
+    res.render('admin/questionario/perguntas', {
+        layout: "admin/admin-template",
+        data: questions
+    });
+});
+
 app.get(`/menu`, async(req, res) => {
     res.render(`main/menu`);
 });

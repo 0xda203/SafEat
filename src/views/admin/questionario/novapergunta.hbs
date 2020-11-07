@@ -1,0 +1,110 @@
+{{#section 'css'}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+{{/section}}
+
+<h1>{{title}}</h1>
+<form action="" role="form" method="POST" id="questionForm">
+    <div class="form-group">
+        <label for="question">Pergunta</label>
+        <input id="question" type="text" class="form-control" autocomplete="off" name="question"
+             required>
+    </div>
+    <div class="form-group">
+        <label for="illustration">Link ilustração</label>
+        <input id="illustration" type="text" class="form-control" autocomplete="off" name="illustration" required>
+    </div>
+    <div class="form-group">
+        <label for="weight">Peso</label>
+        <input id="weight" type="number" class="form-control" autocomplete="off" name="weight" required>
+    </div>
+    <div class="form-group">
+        <label for="method">Método</label>
+        <select name="method" class="form-control" id="method" required>
+            <option value="input">Input</option>
+            <option value="VF">Sim ou Não</option>
+        </select>
+    </div>
+    <div id="type-wrapper" class="form-group">
+        <label for="type">Tipo</label>
+        <select name="type" class="form-control" id="type" required>
+            <option value="number">Número</option>
+            <option value="text">Texto</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="role">Orientação</label>
+        <select name="orientation" class="form-control" id="orientation" required>
+            <option value="left">Esquerda</option>
+            <option value="right">Direita</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="role">Shape de fundo</label>
+        <select name="bgShape" class="form-control" id="bgShape" required>
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary my-1">Cadastrar pergunta</button>
+</form>
+
+{{#section 'jquery'}}
+<script src="/js/dataTable.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+
+    $(function () {
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        $('#questionForm').submit(function (evt) {
+            evt.preventDefault();
+            axios({
+                method: 'post',
+                url: `/admin/questionario/new`,
+                data: {
+                    bgShape: $(`#bgShape`).val() == "true" ? true : false,
+                    question: $(`#question`).val(),
+                    method: $(`#method`).val(),
+                    type: $(`#type`).val(),
+                    illustration: $(`#illustration`).val(),
+                    orientation: $(`#orientation`).val(),
+                    weight: $(`#weight`).val(),
+                }
+            }).then((response) => {
+                var data = response.data;
+                if (data.success) {
+                    toastr.success('Pergunta cadastrada com sucesso', 'Sucesso');
+                } else {
+                    toastr.error('Algum erro ocorreu... Tente novamente mais tarde', 'Erro!');
+                }
+            }, (error) => {
+                toastr.error('Algum erro ocorreu... Tente novamente mais tarde', 'Erro!');
+            });
+
+
+        });
+
+    });
+</script>
+
+{{/section}}
