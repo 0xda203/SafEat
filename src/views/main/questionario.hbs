@@ -48,7 +48,7 @@
  .question-content h1 {
     text-align: center;
     letter-spacing: 0.04em;
-    text-transform: uppercase;
+    text-transdiv class='f': uppercase;
     color: #140779;
     font-weight: 900;
     font-size: 2.5em;
@@ -82,24 +82,24 @@
 
 @keyframes jiggle {
   15%,40%,75%,100% {
-    -webkit-transform-origin: center center;
-            transform-origin: center center;
+    -webkit-transdiv class='f'-origin: center center;
+            transdiv class='f'-origin: center center;
   }
   15% {
-    -webkit-transform: scale(1.4, 1.2);
-            transform: scale(1.4, 1.2);
+    -webkit-transdiv class='f': scale(1.4, 1.2);
+            transdiv class='f': scale(1.4, 1.2);
   }
   40% {
-    -webkit-transform: scale(0.9, 0.9);
-            transform: scale(0.9, 0.9);
+    -webkit-transdiv class='f': scale(0.9, 0.9);
+            transdiv class='f': scale(0.9, 0.9);
   }
   75% {
-    -webkit-transform: scale(1.08, 1);
-            transform: scale(1.08, 1);
+    -webkit-transdiv class='f': scale(1.08, 1);
+            transdiv class='f': scale(1.08, 1);
   }
   100% {
-    -webkit-transform: scale(1, 1);
-            transform: scale(1, 1);
+    -webkit-transdiv class='f': scale(1, 1);
+            transdiv class='f': scale(1, 1);
   }
 }
 
@@ -122,6 +122,31 @@
     font-size: 24px;
  }
 
+ .covid-section {
+     height: 100vh;
+ }
+
+ .container {
+     height: 100% !important;
+ }
+
+ .row {
+     height: 100% !important;
+ }
+
+ .col-lg-6 {
+        display: flex !important;
+ }
+
+ .img-fluid {
+     margin: auto !important;
+ }
+
+ .f {
+     display: block;
+    margin-top: 0em;
+ }
+
 </style>
 {{/section}}
 
@@ -131,7 +156,7 @@
             <div class="row">
                     {{#is this.orientation 'right'}}
                     <div class="col-lg-6 col-md-6 align-self-center question-content" style="margin-right: -40px;"  data-aos="fade-up">
-                        <form>
+                        <div class='f'>
                             <h1>{{this.question}}</h1>
                             {{#is this.method 'VF'}}
                             <div>
@@ -146,19 +171,17 @@
                             <p style="text-align: center;"><input id='input-resposta{{@index}}' type="{{this.type}}" class="input-resposta" required></p>
                             <p style="text-align: right;"><img class="img-next" alt="Proximo" src="/img/next.png"></p>
                             {{/is}}
-                        </form>
+                        </div>
                     </div> 
                     {{/is}}
 
                     <div class="col-lg-6 col-md-6 mb-4 mb-md-0" data-aos="fade-{{this.orientation}}">
-                        <div>
                             <img class="img-fluid" style="margin-{{invert this.orientation}}: 60px;" src="{{this.illustration}}">
-                        </div>
                     </div>  
 
                     {{#is this.orientation 'left'}}
                     <div class="col-lg-6 col-md-6 align-self-center question-content" style="margin-left: -40px;"  data-aos="fade-up">
-                        <form>
+                        <div class='f'>
                             <h1>{{this.question}}</h1>
                             {{#is this.method 'VF'}}
                             <div>
@@ -173,7 +196,7 @@
                             <p style="text-align: center;"><input id='input-resposta{{@index}}' type="{{this.type}}" class="input-resposta" required></p>
                             <p style="text-align: right;"><img class="img-next" alt="Proximo" src="/img/next.png"></p>
                             {{/is}}
-                        </form>
+                        </div>
                     </div> 
                     {{/is}}
                     

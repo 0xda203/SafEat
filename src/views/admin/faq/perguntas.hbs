@@ -14,15 +14,15 @@
     <tbody>
         {{#each data}}
         <tr class="{{@index}}">
-            <td>{{inc @index}}</td>
+            <td>#{{inc @index}}</td>
             <td>{{this.method}}</td>
-            <td>{{#is this.method 'VF'}}{{else}}{{this.type}}{{/is}}</td>
+            <td>{{this.type}}</td>
             <td><a href="{{this.illustration}}">img</a></td>
             <td>{{#is this.orientation 'left'}}esquerda{{else}}direita{{/is}}</td>
             <td>{{this.weight}}</td>
             <td>{{#is this.bgShape true}}sim{{else}}não{{/is}}</td>
             <td class="text-center">
-                <a href="/admin/questionario/perguntas/edit/{{this._id}}"><i class="fas fa-cog" title="Editar Pergunta"></i></a>
+                <a href="/admin/questionario/perguntas/{{this._id}}"><i class="fas fa-cog" title="Editar Pergunta"></i></a>
                 <a class="remove" href="/admin/questionario/perguntas/delete/{{this._id}}"><i class="fas fa-minus-circle"
                         title="Apagar Pergunta"></i></a>
             </td>

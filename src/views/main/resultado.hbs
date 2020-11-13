@@ -9,6 +9,7 @@
         z-index: 999;  
     }
 
+
     .inner {
         margin: auto;
     }
@@ -138,11 +139,19 @@
     }
 }
 
+#saida {
+    color: white;
+    text-align: center;
+    margin:30px;
+    font-size: 3rem;   
+}
+
 </style>
 {{/section}}
 
 <div id="overlay">
     <div class="inner">
+        <div id="saida"></div>
         <div id="chart"></div>
     </div>
 </div>
@@ -154,8 +163,7 @@
             </div>
             <div class="col-md-5 col-lg-5 mb-6 mb-md-0 txt" data-aos="fade-up">
                 <div class="text-area">
-
-                </div>
+                                    </div>
             </div>
             
         </div>
@@ -209,6 +217,21 @@
         value.transition()
             .duration(750)
             .call(textTween, v);
+    }
+
+    function intervalo(resultado){
+        if (resultado<=30){
+            return("alto risco de interdição");
+        }
+        if(resultado>=31 && resultado<=70){
+            return("Médio risco de interdição");
+        }
+        if(resultado>=70 && resultado<=99){
+            return("Baixo risco de interdição");
+        }
+        if(resultado==100){
+            return("Excelente, tá de parabéns!!!");
+        }
     }
 
         var size = 150, thickness = 60;
@@ -266,13 +289,15 @@
             .attr('text-anchor', 'middle')
             .attr('x', -(size - thickness / 2));
        
-        settimeout(async () => {
-               await $("#top").fadeout(1000); // fadeout no loader
-               setinterval(function() {
-                update({{percentage}});
-                $('#chart').addclass('zoom')
-            }, 1000);
-        }, 2000);
+        setTimeout(async () => {
+               await $("#top").fadeOut(1000); // fadeout no loader
+               setInterval(function() {
+                    update({{percentage}});
+                    $('#chart').addClass('zoom');
+                    //document.getElementById('saida').innerHTML = intervalo({{percentage}});
+                    $('#saida').text(intervalo({{percentage}}));
+                }, 1000); 
+        }, 2000); 
 
     });       
 </script>

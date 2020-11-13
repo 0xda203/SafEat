@@ -18,6 +18,9 @@ module.exports = handlebars({
         },
         json: function(data) {
             return JSON.stringify(data);
+        },
+        inc: function(data) {
+            return data + 1;
         }
     },
     extname: '.hbs'

@@ -7,19 +7,19 @@
 <form action="" role="form" method="POST" id="questionForm">
     <div class="form-group">
         <label for="question">Pergunta</label>
-        <input id="question" type="text" class="form-control" autocomplete="off" name="question"
+        <input id="question" type="text" class="form-control" autocomplete="off" value="{{data.question}}" name="question"
              required>
     </div>
     <div class="form-group">
         <label for="role">Depende de outra pergunta?</label>
         <select name="hasDependency" class="form-control" id="hasDependency" required>
             <option value="true">Sim</option>
-            <option value="false" selected>Não</option>
+            <option value="false">Não</option>
         </select>
     </div>
     <div id="dependency-wrapper" class="form-group">
         <label for="dependency">Pergunta pai</label>
-        <select name="dependency" class="form-control" id="dependency">
+        <select name="dependecy" class="form-control" id="dependency" required>
             {{#each questions}}
                 <option value="{{this._id}}">#{{inc @index}} - {{this.question}}</option>
             {{/each}}
@@ -27,26 +27,26 @@
     </div>
     <div class="form-group">
         <label for="illustration">Link ilustração</label>
-        <input id="illustration" type="text" class="form-control" autocomplete="off" name="illustration" required>
+        <input id="illustration" type="text" class="form-control" autocomplete="off" value="{{data.illustration}}" name="illustration" required>
     </div>
-    <div class="form-group"><div id="type-wrapper" class="form-group">
-        <label for="type">Tipo</label>
-        <select name="type" class="form-control" id="type" required>
-            <option value="number">Número</option>
-            <option value="text">Texto</option>
-        </select>
-    </div>
+    <div class="form-group">
         <label for="weight">Peso</label>
-        <input id="weight" type="number" class="form-control" autocomplete="off" name="weight" required>
+        <input id="weight" type="number" class="form-control" value="{{data.weight}}" autocomplete="off" name="weight" required>
     </div>
-    <div class="form-group" id="method-wrapper">
+    <div class="form-group">
         <label for="method">Método</label>
         <select name="method" class="form-control" id="method" required>
             <option value="input">Input</option>
             <option value="VF">Sim ou Não</option>
         </select>
     </div>
-    
+    <div id="type-wrapper" class="form-group">
+        <label for="type">Tipo</label>
+        <select name="type" class="form-control" id="type" required>
+            <option value="number">Número</option>
+            <option value="text">Texto</option>
+        </select>
+    </div>
     <div class="form-group">
         <label for="role">Orientação</label>
         <select name="orientation" class="form-control" id="orientation" required>
@@ -61,8 +61,7 @@
             <option value="false">Não</option>
         </select>
     </div>
-
-    <button type="submit" class="btn btn-primary my-1">Cadastrar pergunta</button>
+    <button type="submit" class="btn btn-primary my-1">Editar pergunta</button>
 </form>
 
 {{#section 'jquery'}}
@@ -70,28 +69,39 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
-
-    toastr.options = {
-        "closeButton": false,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": true,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
+     toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
 
     $(function () {
+        
+        $('#type option[value="{{data.bgShape}}"]').attr("selected", "selected");
+        $('#type option[value="{{data.orientation}}"]').attr("selected", "selected");
+        $('#type option[value="{{data.type}}"]').attr("selected", "selected");
 
-        $('#dependency-wrapper').css('display', 'none');
+        $('#hasDependency option[value="{{data.hasDependency}}"]').attr("selected", "selected");
+
+        $('#type option[value="{{data.method}}"]').attr("selected", "selected");
+        $('#type-wrapper').css('display', $('#method').val() == 'VF' ? 'none' : 'block');
+
+        $('#hasDependency option[value="{{data.hasDependency}}"]').attr("selected", "selected");
+        $('#dependency-wrapper').css('display', $('#hasDependency').val() == "false" ? 'none' : 'block');
+
+        $('#dependency option[value="{{data.dependency}}"]').attr("selected", "selected");
 
         $('#method').change(() => {
             $('#type-wrapper').css('display', $('#method').val() == 'VF' ? 'none' : 'block');
@@ -100,19 +110,19 @@
         $('#hasDependency').change(() => {
             $('#dependency-wrapper').css('display', $('#hasDependency').val() == 'false' ? 'none' : 'block');
         });
-
+      
         $('#questionForm').submit(function (evt) {
             evt.preventDefault();
             axios({
                 method: 'post',
-                url: `/admin/questionario/perguntas/new`,
+                url: ``,
                 data: {
                     bgShape: $(`#bgShape`).val() == "true" ? true : false,
                     question: $(`#question`).val(),
                     method: $(`#method`).val(),
-                    hasDependency: $('#hasDependency').val(),
-                    dependency: $('#dependency').val(),
                     type: $(`#type`).val(),
+                    hasDependency: $('#hasDependency').val() == "true" ? true : false,
+                    dependency: $('#dependency').val(),
                     illustration: $(`#illustration`).val(),
                     orientation: $(`#orientation`).val(),
                     weight: $(`#weight`).val(),
@@ -120,17 +130,14 @@
             }).then((response) => {
                 var data = response.data;
                 if (data.success) {
-                    toastr.success('Pergunta cadastrada com sucesso', 'Sucesso');
+                    toastr.success('Pergunta editada com sucesso', 'Sucesso');
                 } else {
                     toastr.error('Algum erro ocorreu... Tente novamente mais tarde', 'Erro!');
                 }
             }, (error) => {
                 toastr.error('Algum erro ocorreu... Tente novamente mais tarde', 'Erro!');
             });
-
-
         });
-
     });
 </script>
 
