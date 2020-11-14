@@ -21,6 +21,9 @@ module.exports = handlebars({
         },
         inc: function(data) {
             return data + 1;
+        },
+        mult: function(a, b) {
+            return parseInt(a) * parseInt(b);
         }
     },
     extname: '.hbs'

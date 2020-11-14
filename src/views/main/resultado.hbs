@@ -1,4 +1,7 @@
 {{#section 'css'}}
+<link href="https://iamdanfox.github.io/anno.js/dist/anno.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
+
 <style>
     #overlay {
         position: fixed;
@@ -6,7 +9,7 @@
         width: 100vw;
         display: flex;
         height: 100vh;
-        z-index: 999;  
+        z-index: 999;
     }
 
 
@@ -20,7 +23,7 @@
     }
 
     .zoom {
-        animation: zoominoutsinglefeatured 2s ;
+        animation: zoominoutsinglefeatured 2s;
     }
 
     .gauge .background {
@@ -47,27 +50,19 @@
     }
 
     .background-shape::before {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: -100px;
-    width: 100vw;
-    height: 100vh;
-    background: url("/img/shape-left.png") left center no-repeat;
-    background-size: cover;
-    content: "";
-    z-index: -1;
-}
+        content: "";
+    }
 
     @media (max-width: 767px) {
         .intro-section .container2 .txt {
             padding-left: 0 !important;
             margin-top: 0 !important;
         }
+
         .intro-section .container2 .img {
             display: none;
         }
-}
+    }
 
     @media (min-width: 768px) and (max-width: 1350px) {
         .intro-section .container2 .text-area h1:nth-child(1) {
@@ -121,130 +116,297 @@
         padding-left: 40px;
     }
 
-
     .intro-section .container2 .text-area h1:nth-child(1) {
         margin-bottom: 0px;
         font-size: 2.5em;
     }
 
+    .value {
+        fill: #333951 !important;
+        font-weight: 900;
+        font-size: 5rem !important;
+    }
+
+    .value2 {
+        fill: #777;
+        font-weight: 200;
+        font-size: 2.6rem !important;
+    }
+
     @keyframes zoominoutsinglefeatured {
-    0% {
-        transform: scale(1,1);
-    }
-    50% {
-        transform: scale(1.2,1.2);
-    }
-    100% {
-        transform: scale(1,1);
-    }
-}
+        0% {
+            transform: scale(1, 1);
+        }
 
-#saida {
-    color: white;
-    text-align: center;
-    margin:30px;
-    font-size: 3rem;   
-}
+        50% {
+            transform: scale(1.2, 1.2);
+        }
 
+        100% {
+            transform: scale(1, 1);
+        }
+    }
+
+    #saida,
+    #saida2 {
+        color: black;
+        text-align: center;
+        margin: 30px;
+        font-size: 3rem;
+        font-weight: 900;
+    }
+
+    #saida {
+        font-weight: 300;
+    }
+
+    .intro-section .container2 .img {
+        margin-top: 20px;
+    }
+
+    .intro-section .container2 .txt {
+        margin-top: 50px;
+    }
+
+    .card-body i {
+        position: absolute;
+        top: 10px;
+        font-size: 3rem;
+        color: #d6103b;
+        right: 20px;
+    }
+
+    .c-green {
+        color: #00af7d !important;
+    }
+
+    .c-orange {
+        color: #ffb23d !important;
+    }
+
+    .text-center a {
+        font-size: 2rem;
+        padding: 0.4em 3rem;
+    }
 </style>
 {{/section}}
 
-<div id="overlay">
-    <div class="inner">
+{{!-- <div id="overlay">
+    <div id="inner" class="inner">
         <div id="saida"></div>
         <div id="chart"></div>
     </div>
-</div>
-<section class="intro-section">      
+</div> --}}
+<section class="intro-section">
     <div class="container2">
         <div class="row align-items-center text center text-md-left">
-            <div class="col-md-6 col-lg-7 col-xl-6 img" data-aos="fade-left">
-                {{!-- <img class="img-fluid" src="/img/running-covid.png"> --}}
+            <div class="col-md-6 col-lg-7 col-xl-6 img" data-aos="fade-left" data-aos-delay="2900">
+                <div id="ll">
+                    <div id="saida2"></div>
+                    <div id="chart"></div>
+                    <div id="saida"></div>
+                </div>
+
+
+                <div id="again" class="text-center">
+                    <a href="/client/questionario/responder" class='btn btn-warning text-white'>Refazer o teste</a>
+                </div>
+
             </div>
-            <div class="col-md-5 col-lg-5 mb-6 mb-md-0 txt" data-aos="fade-up">
+            <div class="col-md-5 col-lg-5 mb-6 mb-md-0 txt">
                 <div class="text-area">
-                                    </div>
+
+                    <div class="card mb-3" data-aos="fade-up" data-aos-delay="3000">
+                        <div class="card-body">
+                            <h2 class="card-title">Sua situação</h2>
+                            <i id="situation-icon" class="fas"></i>
+
+                            <p id="situation" class="card-text"></p>
+                        </div>
+                    </div>
+
+                    <div id="aspects">
+                        <div class="card" data-aos="fade-left" data-aos-delay="3000">
+                            <div class="card-body">
+                    
+                                <h2 class="card-title">Aspectos que diminuem</h2>
+                                <i class="fas fa-arrow-down"></i>
+                                <p class="card-text"><a data-toggle="modal" href="#" data-target="#exampleModalCenter">Clique para entender</a></p>
+                            </div>
+                        </div>
+                        <div class="card mt-3" data-aos="fade-left" data-aos-delay="3000">
+                            <div class="card-body">
+                                <h2 class="card-title">Aspectos que aumentam</h2>
+                                <i class="fas fa-arrow-up c-green"></i>
+                                <p  class="card-text"><a data-toggle="modal" href="#" data-target="#exampleModalLong">Clique para entender</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="details" class="text-center mt-3" data-aos="fade-up" data-aos-delay="3000">
+                        <a href="/client/questionario/responder" class='btn btn-info text-white btn-block'>Entender
+                            resultado detalhadamente</a>
+                    </div>
+                    <div id="compare" class="text-center mt-3" data-aos="fade-up" data-aos-delay="3000">
+                        <a href="/client/questionario/responder" class='btn btn-dark text-white btn-block'>Comparar
+                            resultado com estabelecimentos próximos</a>
+                    </div>
+                </div>
             </div>
-            
+
         </div>
     </div>
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <p>conteúdo</p> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </section>
 
 {{#section 'jquery'}}
 <script src='https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
 <script src="https://d3js.org/d3.v3.js"></script>
-
+<script src="https://iamdanfox.github.io/anno.js/dist/anno.js" type="text/javascript"></script>
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
 
 <script>
     $("#top").css("display", "flex");
 
 
     $(function () {
-
-
-            function arcTween(transition, v) {
-        var newAngle = v / 100 * Math.PI - Math.PI / 2;
-        transition.attrTween('d', function(d) {
-            var interpolate = d3.interpolate(d.endAngle, newAngle);
-            return function(t) {
-                d.endAngle = interpolate(t);
-                return arc(d);
-            };  
-        });
-    }
-
-    function textTween(transition, v) {
-        transition.tween('text', function() {
-            var interpolate = d3.interpolate(this.innerHTML, v),
-                split = (v + '').split('.'),
-                round = (split.length > 1) ? Math.pow(10, split[1].length) : 1;
-            return function(t) {
-                this.innerHTML = d3.format('.1f')(Math.round(interpolate(t) * round) / round) + '<tspan></tspan>';
-            };
-        });
-    }
-
-    function update(v) {
-        v = d3.format('.1f')(v);
-        foreground.transition()
-            .duration(750)
-            .style('fill', function() {
-                return color(v);
-            })
-            .call(arcTween, v);
-
-        value.transition()
-            .duration(750)
-            .call(textTween, v);
-    }
-
-    function intervalo(resultado){
-        if (resultado<=30){
-            return("alto risco de interdição");
+        function arcTween(transition, v) {
+            var newAngle = v / 100 * Math.PI - Math.PI / 2;
+            transition.attrTween('d', function (d) {
+                var interpolate = d3.interpolate(d.endAngle, newAngle);
+                return function (t) {
+                    d.endAngle = interpolate(t);
+                    return arc(d);
+                };
+            });
         }
-        if(resultado>=31 && resultado<=70){
-            return("Médio risco de interdição");
-        }
-        if(resultado>=70 && resultado<=99){
-            return("Baixo risco de interdição");
-        }
-        if(resultado==100){
-            return("Excelente, tá de parabéns!!!");
-        }
-    }
 
-        var size = 150, thickness = 60;
+        function textTween(transition, v) {
+            transition.tween('text', function () {
+                var interpolate = d3.interpolate(this.innerHTML, v),
+                    split = (v + '').split('.'),
+                    round = (split.length > 1) ? Math.pow(10, split[1].length) : 1;
+                return function (t) {
+                    this.innerHTML = d3.format('.1f')(Math.round(interpolate(t) * round) / round) + '<tspan></tspan>';
+                };
+            });
+        }
+
+        function update(v) {
+            v = d3.format('.1f')(v);
+            foreground.transition()
+                .duration(750)
+                .style('fill', function () {
+                    return color(v);
+                })
+                .call(arcTween, v);
+
+            value.transition()
+                .duration(1200)
+                .call(textTween, v);
+        }
+
+        function risco(resultado) {
+            if (resultado <= 30) {
+                return ("alto risco de interdição");
+            }
+            if (resultado >= 31 && resultado <= 70) {
+                return ("Médio risco de interdição");
+            }
+            if (resultado >= 70 && resultado <= 99) {
+                return ("Baixo risco de interdição");
+            }
+            if (resultado == 100) {
+                return ("Excelente, tá de parabéns!!!");
+            }
+        }
+
+        function score(resultado) {
+            if (resultado <= 30) {
+                return ("Seu score está ruim");
+            } else if (resultado >= 31 && resultado <= 70) {
+                return ("Seu score está razoázel");
+            } else if (resultado >= 70 && resultado <= 99) {
+                return ("Seu score está ótimo");
+            } else if (resultado == 100) {
+                return ("Seu score está excelente");
+            }
+        }
+
+        function situacao(resultado) {
+            if (resultado <= 30) {
+                $('#situation-icon').addClass('fa-times');
+                $('#situation').text("Seu estabelecimento apresenta sérios problemas, corrija-os imediatamente ou estará em risco de interdição")
+            } else if (resultado >= 31 && resultado <= 70) {
+                $('#situation-icon').addClass('fa-exclamation-triangle');
+                $('#situation-icon').addClass('c-orange');
+                $('#situation').text("Seu estabelecimento atende a alguns requisitos, mas ignora vários outros. Corrija-os imediatamente para ficar tranquilo sobre isso ;)");
+            } else if (resultado >= 70) {
+                $('#situation-icon').addClass('fa-check');
+                $('#situation-icon').addClass('c-green');
+                $('#situation').text("Seu estabelecimento atende os requisitos mínimos para o funcionamento e está livre de problemas.");
+            }
+        }
+
+        var size = 150, thickness = 20;
 
         var color = d3.scale.linear()
-            .domain([0, 50, 100])
-            .range(['#db2828', '#fbbd08', '#21ba45']);  
-        // COMENTARIO #db2828- vermelho #21ba45-verde
+            .domain([0, 50, 70, 100])
+            .range(['#f94c4c', '#faac23', '#74d66b', '#00af7d']);
 
         var arc = d3.svg.arc()
             .innerRadius(size - thickness)
             .outerRadius(size)
-            .startAngle(-Math.PI / 2);
+            .startAngle(-Math.PI / 2)
+            .cornerRadius(size);
 
         var svg = d3.select('#chart').append('svg')
             .attr('width', size * 2)
@@ -263,17 +425,25 @@
 
         var foreground = chart.append('path')
             .datum({
-                endAngle: -Math.PI / 2  
+                endAngle: -Math.PI / 2
             })
             .style('fill', '#db2828')
             .attr('d', arc);
 
         var value = svg.append('g')
-            .attr('transform', 'translate(' + size + ',' + (size * .9) + ')')
+            .attr('transform', 'translate(' + 150 + ',' + 150 + ')')
+            .append('text')
+            .text('de 100')
+            .attr('text-anchor', 'middle')
+            .attr('class', 'value2');
+
+        var value = svg.append('g')
+            .attr('transform', 'translate(' + 150 + ',' + 120 + ')')
             .append('text')
             .text(0)
             .attr('text-anchor', 'middle')
             .attr('class', 'value');
+
 
         var scale = svg.append('g')
             .attr('transform', 'translate(' + size + ',' + (size + 15) + ')')
@@ -288,15 +458,20 @@
             .text(0)
             .attr('text-anchor', 'middle')
             .attr('x', -(size - thickness / 2));
-       
+
+        scale.append('text')
+            .text(0)
+            .attr('text-anchor', 'middle')
+            .attr('x', -(size - thickness / 2));
+
         setTimeout(async () => {
-               await $("#top").fadeOut(1000); // fadeout no loader
-               setInterval(function() {
-                    update({{percentage}});
-                    $('#chart').addClass('zoom');
-                    //document.getElementById('saida').innerHTML = intervalo({{percentage}});
-                    $('#saida').text(intervalo({{percentage}}));
-                }, 1000); 
+            $('#top').fadeOut(1000);
+            $('#saida').text(risco({{ percentage }}));
+            $('#saida2').text(score({{ percentage }}));
+            situacao({{ percentage }});
+            setInterval(() => {
+                update({{ percentage }});
+            }, 1000); 
         }, 2000); 
 
     });       

@@ -1,22 +1,10 @@
 {{#section 'css'}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css" integrity="sha512-KbfxGgOkkFXdpDCVkrlTYYNXbF2TwlCecJjq1gK5B+BYwVk7DGbpYi4d4+Vulz9h+1wgzJMWqnyHQ+RDAlp8Dw==" crossorigin="anonymous" />
 <style>
     .intro-section {
         height: 100vh;
         padding-top: 120px;
     }
-
-    .background-shape::before {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: -100px;
-    width: 100vw;
-    height: 100vh;
-    background: url("/img/shape-left.png") left center no-repeat;
-    background-size: cover;
-    content: "";
-    z-index: -1;
-}
 
     @media (max-width: 767px) {
         .intro-section .container2 .txt {
@@ -85,27 +73,30 @@
         margin-bottom: 0px;
         font-size: 2.5em;
     }
-
 </style>
 {{/section}}
 
 <section class="intro-section">      
     <div class="container2">
         <div class="row align-items-center text center text-md-left">
-            <div class="col-md-6 col-lg-7 col-xl-6 img" data-aos="fade-left">
-                <img class="img-fluid" src="/img/running-covid.png">
-            </div>
-            <div class="col-md-5 col-lg-5 mb-6 mb-md-0 txt" data-aos="fade-up">
-                <div class="text-area">
-                    <h1>O que você deseja fazer?</h1>
+            <div class="col-md-11" data-aos="fade-left">
+              <div class="text-area">
+                    <h1>Iniciar nova discussão</h1>
                     <ul>
-                        <li><i class='bx bxs-tag-alt' style="margin-right: 10px; color: #ed7e43"></i><a href="/client/questionario/responder">VERIFICAR SE MEU RESTAURANTE ESTÁ DE ACORDO COM O PROTOCOLO VIGENTE</a></li>
-                        <li><i class='bx bxs-tag-alt' style="margin-right: 10px; color: #ed4943"></i><a href="/#faq">IR à SEÇÃO DE PERGUNTAS MAIS FREQUENTES</a></li>
-                        <li><i class='bx bxs-tag-alt' style="margin-right: 10px; color: #4362ed"></i><a >ACESSAR FORUM</a></li>
+                        <div class="summernote"></div>
+
                     </ul>
                 </div>
-            </div>
-            
+            </div>            
         </div>
     </div>
 </section>
+
+{{#section 'jquery'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js" integrity="sha512-kZv5Zq4Cj/9aTpjyYFrt7CmyTUlvBday8NGjD9MxJyOY/f2UfRYluKsFzek26XWQaiAp7SZ0ekE7ooL9IYMM2A==" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+  $('.summernote').summernote();
+});
+</script>
+{{/section}}

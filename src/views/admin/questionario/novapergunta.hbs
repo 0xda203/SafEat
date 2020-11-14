@@ -25,17 +25,25 @@
             {{/each}}
         </select>
     </div>
-    <div class="form-group">
+        <div class="form-group">
         <label for="illustration">Link ilustração</label>
-        <input id="illustration" type="text" class="form-control" autocomplete="off" name="illustration" required>
+        <input id="illustration" type="text" value="/img/perguntas/people.png" class="form-control" autocomplete="off" name="illustration" required>
     </div>
-    <div class="form-group"><div id="type-wrapper" class="form-group">
-        <label for="type">Tipo</label>
-        <select name="type" class="form-control" id="type" required>
-            <option value="number">Número</option>
-            <option value="text">Texto</option>
+        <div class="form-group">
+        <label for="role">Orientação</label>
+        <select name="orientation" class="form-control" id="orientation" required>
+            <option value="left">Esquerda</option>
+            <option value="right">Direita</option>
         </select>
     </div>
+    <div class="form-group">
+        <label for="role">Tem shape de fundo?</label>
+        <select name="bgShape" class="form-control" id="bgShape" required>
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+        </select>
+    </div>
+    <div class="form-group" >
         <label for="weight">Peso</label>
         <input id="weight" type="number" class="form-control" autocomplete="off" name="weight" required>
     </div>
@@ -46,22 +54,22 @@
             <option value="VF">Sim ou Não</option>
         </select>
     </div>
-    
-    <div class="form-group">
-        <label for="role">Orientação</label>
-        <select name="orientation" class="form-control" id="orientation" required>
-            <option value="left">Esquerda</option>
-            <option value="right">Direita</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="role">Shape de fundo</label>
-        <select name="bgShape" class="form-control" id="bgShape" required>
-            <option value="true">Sim</option>
-            <option value="false">Não</option>
-        </select>
-    </div>
 
+    <div class="form-group"><div id="type-wrapper" class="form-group">
+        <label for="type">Tipo</label>
+        <select name="type" class="form-control" id="type" required>
+            <option value="number">Número</option>
+            <option value="text">Texto</option>
+        </select>
+    </div>
+        <div class="form-group">
+        <label for="role">Função pontuação</label>
+        <textarea cols="40" rows="10" id="additionalLogic" class="form-control" >
+function(questions, idx) {
+    return questions[idx].weight;
+}
+        </textarea>
+    </div>
     <button type="submit" class="btn btn-primary my-1">Cadastrar pergunta</button>
 </form>
 
@@ -95,6 +103,15 @@
 
         $('#method').change(() => {
             $('#type-wrapper').css('display', $('#method').val() == 'VF' ? 'none' : 'block');
+            if ($('#method').val() == 'VF') {
+                $('#additionalLogic').val(`function(questions, idx) {
+    return questions[idx].answer == 'SIM' ? questions[idx].weight : 0;
+}`);
+            } else {
+                $('#additionalLogic').val(`function(questions, idx) {
+    return questions[idx].weight;
+}`);
+            }
         });
 
         $('#hasDependency').change(() => {
@@ -111,6 +128,7 @@
                     question: $(`#question`).val(),
                     method: $(`#method`).val(),
                     hasDependency: $('#hasDependency').val(),
+                    function: $('#additionalLogic').val(), // .replaceAll(`/n`, '')
                     dependency: $('#dependency').val(),
                     type: $(`#type`).val(),
                     illustration: $(`#illustration`).val(),

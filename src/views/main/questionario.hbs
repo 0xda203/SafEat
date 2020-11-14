@@ -206,13 +206,13 @@
     </section>
 {{/each}}
 
-
+<!--
 <div class="progress-wrapper">
     <div class="progress">
         <div class="progress-bar" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="background-color: #FAA94A;">
         </div>
     </div>
-</div>
+</div> -->
 
 {{#section 'jquery'}}
 <script src='https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js'></script>
@@ -229,10 +229,13 @@
         
         var currentQuestion = 0;
         var questions = JSON.parse('{{{json questions}}}');
+        console.log(questions);
+        
         var progress = 0;
+        var total = questions.length - questions.filter((item) => item.hasDependency == "true").length;
 
         for (let i = 1; i <questions.length; i++) {
-            $(`#question-${i}`).css('display', 'none'); // hide
+            $(`#question-${i}`).css('display', 'none');
         }
 
         setTimeout(() => {
@@ -246,16 +249,19 @@
             }, 1200);
         }, 2000);
 
+        var aux = {};
+
         $('.btn-next').click(async(e) => {  
             e.preventDefault();
 
              $(this).prop("disabled",true);  
-            $(this).closest('button').prop("disabled",true);  
+             $(this).closest('button').prop("disabled",true);  
 
+            aux[questions[currentQuestion]._id] = e.target.innerHTML;
             questions[currentQuestion].answer = e.target.innerHTML;    
 
             if (currentQuestion + 1 == questions.length) {
-                updateProgress('100');
+                //updateProgress('100');
 
                 Swal.fire(
                     'Obrigado!',
@@ -270,17 +276,51 @@
                     delete questions[i].bgShape;
                 }
 
-                axios.post('/questionario', {questions: questions}).then((res) => {
+                axios.post('', {questions: questions}).then((res) => {
                     setTimeout(() => {
-                        window.location.replace(`/questionario/${res.data.id}`);
+                        window.location.replace(`/client/questionario/${res.data.id}`);
                     }, 500);
                 });
 
                 return false;
             }
 
-           progress = Math.round(progress + 100/questions.length);
-            updateProgress(progress);
+            let j = 1;
+            while (questions[currentQuestion + j].hasDependency == "true" && aux[questions[currentQuestion + j].dependency] == 'NÃO') {
+                j++;
+
+                questions[currentQuestion + j - 1].ignored = true;
+
+                if (currentQuestion + j == questions.length) {
+                   // updateProgress('100');
+                    Swal.fire(
+                        'Obrigado!',
+                        'Obrigado por responder ao nosso questionário, aguarde alguns instantes enquanto processamos suas respostas!',
+                        'success'
+                    );                 
+
+                    for (let i = 0; i < questions.length; i++) {
+                        delete questions[i].method;
+                        delete questions[i].illustration;   
+                        delete questions[i].orientation;
+                        delete questions[i].bgShape;
+                    }
+
+                    axios.post('', {questions: questions}).then((res) => {
+                        setTimeout(() => {
+                            window.location.replace(`/client/resultado/${res.data.id}`);
+                        }, 500);
+                    });
+
+                    return false;
+                }
+            }
+
+            await $(`#question-${currentQuestion}`).fadeOut(1000);
+            currentQuestion += j;
+
+           //progress = Math.round(progress + 100/total++);
+            //updateProgress(progress);
 
              if (questions[currentQuestion].bgShape) {
                 document.querySelector('.background-shape').classList.add(questions[currentQuestion].orientation == 'left' ? 'modifier-before' : 'modifier-after'); 
@@ -289,7 +329,6 @@
                 document.querySelector('.background-shape').classList.remove('modifier-before'); 
             }
                         
-            await $(`#question-${currentQuestion++}`).fadeOut(1000);
             $(`#question-${currentQuestion}`).fadeIn(1000);
             
              
@@ -304,7 +343,6 @@
                 );    
                 return false;
             }
-
             
             questions[currentQuestion].answer = $(`#input-resposta${currentQuestion}`).val();
 
@@ -325,19 +363,53 @@
                     delete questions[i].bgShape;
                 }
 
-                axios.post('/questionario', {questions: questions}).then((res) => {
+                axios.post('', {questions: questions}).then((res) => {
                     setTimeout(() => {
-                        window.location.replace(`/questionario/${res.data.id}`);
+                        window.location.replace(`/client/resultado/${res.data.id}`);
                     }, 500);
                 });
 
                 return false;
             }
 
-            await $(`#question-${currentQuestion++}`).fadeOut(1000);
+            let j = 1;
+            while (questions[currentQuestion + j].hasDependency == "true" && aux[questions[currentQuestion + j].dependency] == 'NÃO') {
+                j++;
+
+                questions[currentQuestion + j - 1].ignored = true;
+                if (currentQuestion + j == questions.length) {
+                    updateProgress('100');
+                    Swal.fire(
+                        'Obrigado!',
+                        'Obrigado por responder ao nosso questionário, aguarde alguns instantes enquanto processamos suas respostas!',
+                        'success'
+                    );                 
+
+                    for (let i = 0; i < questions.length; i++) {
+                        delete questions[i].method;
+                        delete questions[i].illustration;   
+                        delete questions[i].orientation;
+                        delete questions[i].bgShape;
+                    }
+
+                    axios.post('/questionario', {questions: questions}).then((res) => {
+                        setTimeout(() => {
+                            window.location.replace(`/questionario/${res.data.id}`);
+                        }, 500);
+                    });
+
+                    return false;
+                }
+                
+            }
+
+            await $(`#question-${currentQuestion}`).fadeOut(1000);
+
+            currentQuestion += j;
             $(`#question-${currentQuestion}`).fadeIn(1000);
-            progress = Math.round(progress + 100/questions.length);
-            updateProgress(progress);
+
+            //progress = Math.round(progress + 100/total++);
+            //updateProgress(progress);
 
             if (questions[currentQuestion].bgShape) {
                 document.querySelector('.background-shape').classList.add(questions[currentQuestion].orientation == 'left' ? 'modifier-before' : 'modifier-after'); 

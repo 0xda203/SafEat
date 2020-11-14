@@ -29,6 +29,20 @@
         <label for="illustration">Link ilustração</label>
         <input id="illustration" type="text" class="form-control" autocomplete="off" value="{{data.illustration}}" name="illustration" required>
     </div>
+        <div class="form-group">
+        <label for="role">Orientação</label>
+        <select name="orientation" class="form-control" id="orientation" required>
+            <option value="left">Esquerda</option>
+            <option value="right">Direita</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="role">Tem shape de fundo?</label>
+        <select name="bgShape" class="form-control" id="bgShape" required>
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+        </select>
+    </div>
     <div class="form-group">
         <label for="weight">Peso</label>
         <input id="weight" type="number" class="form-control" value="{{data.weight}}" autocomplete="off" name="weight" required>
@@ -48,18 +62,9 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="role">Orientação</label>
-        <select name="orientation" class="form-control" id="orientation" required>
-            <option value="left">Esquerda</option>
-            <option value="right">Direita</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="role">Shape de fundo</label>
-        <select name="bgShape" class="form-control" id="bgShape" required>
-            <option value="true">Sim</option>
-            <option value="false">Não</option>
-        </select>
+        <label for="role">Função pontuação</label>
+        <textarea cols="40" rows="10" id="additionalLogic" class="form-control" >{{data.function}}
+        </textarea>
     </div>
     <button type="submit" class="btn btn-primary my-1">Editar pergunta</button>
 </form>
@@ -89,13 +94,13 @@
 
     $(function () {
         
-        $('#type option[value="{{data.bgShape}}"]').attr("selected", "selected");
-        $('#type option[value="{{data.orientation}}"]').attr("selected", "selected");
+        $('#bgShape option[value="{{data.bgShape}}"]').attr("selected", "selected");
+        $('#orientation option[value="{{data.orientation}}"]').attr("selected", "selected");
         $('#type option[value="{{data.type}}"]').attr("selected", "selected");
 
         $('#hasDependency option[value="{{data.hasDependency}}"]').attr("selected", "selected");
 
-        $('#type option[value="{{data.method}}"]').attr("selected", "selected");
+        $('#method option[value="{{data.method}}"]').attr("selected", "selected");
         $('#type-wrapper').css('display', $('#method').val() == 'VF' ? 'none' : 'block');
 
         $('#hasDependency option[value="{{data.hasDependency}}"]').attr("selected", "selected");
@@ -105,6 +110,15 @@
 
         $('#method').change(() => {
             $('#type-wrapper').css('display', $('#method').val() == 'VF' ? 'none' : 'block');
+            if ($('#method').val() == 'VF') {
+                $('#additionalLogic').val(`function(questions, idx) {
+    return questions[idx].answer == 'SIM' ? questions[idx].weight : 0;
+}`);
+            } else {
+                $('#additionalLogic').val(`function(questions, idx) {
+    return questions[idx].weight;
+}`);
+            }
         });
 
         $('#hasDependency').change(() => {
@@ -121,6 +135,7 @@
                     question: $(`#question`).val(),
                     method: $(`#method`).val(),
                     type: $(`#type`).val(),
+                    function: $('#additionalLogic').val(), // .replaceAll(`/n`, '')
                     hasDependency: $('#hasDependency').val() == "true" ? true : false,
                     dependency: $('#dependency').val(),
                     illustration: $(`#illustration`).val(),

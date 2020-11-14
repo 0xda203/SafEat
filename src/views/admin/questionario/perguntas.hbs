@@ -15,7 +15,7 @@
         {{#each data}}
         <tr class="{{@index}}">
             <td>{{inc @index}}</td>
-            <td>{{this.method}}</td>
+            <td>{{#is this.method 'VF'}}Sim/Não{{else}}Input{{/is}}</td>
             <td>{{#is this.method 'VF'}}{{else}}{{this.type}}{{/is}}</td>
             <td><a href="{{this.illustration}}">img</a></td>
             <td>{{#is this.orientation 'left'}}esquerda{{else}}direita{{/is}}</td>

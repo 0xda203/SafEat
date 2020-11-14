@@ -35,7 +35,7 @@
                             <li class="nav-item"><a class="nav-link" href="#faq">faq</a></li>
                         </ul>
                         <div class="nav-right text-center text-lg-right py-4 py-lg-0">
-                            <a class="aux">LOGIN</a>
+                            <a href="/client/menu" class="aux">LOGIN</a>
                             <a class="button">Cadastre-se</a>
                         </div>
                     </div>
@@ -151,71 +151,18 @@
 
         <div class="accordion-list">
           <ul>
-            <li data-aos="fade-up">
+            {{#each questions}}
+            <li data-aos="fade-up" data-aos-delay="{{mult @index 100}}">
               <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" class="collapse"
-                href="#accordion-list-1">Este protocolo será mantido até o fim do período de isolamento social? <i
+                href="#accordion-list-{{@index}}">{{this.question}} <i
                   class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="accordion-list-1" class="collapse show" data-parent=".accordion-list">
+              <div id="accordion-list-{{@index}}" class="collapse show" data-parent=".accordion-list">
                 <p>
-                  Sim, o protocolo será mantido até o final do período de isolamento social. Mudanças, porém, caso necessárias, serão protocoladas pela Abrasel (Associação Brasileira de Bares e Restaurantes) e dependerão de assinatura do prefeito municipal para entrarem em vigor.
+                  {{this.answer}}
                 </p>
               </div>
             </li>
-
-            <li data-aos="fade-up" data-aos-delay="100">
-              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#accordion-list-2"
-                class="collapsed">Quais riscos correm meu estabelecimento caso não esteja de acordo com o protocolo de funcionamento? <i
-                  class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="accordion-list-2" class="collapse" data-parent=".accordion-list">
-                <p>
-                  Interdição e pagamento de multa de R$ 9.231,65, aplicada a cada 250m². De acordo com a Secretaria Municipal das Subprefeituras de São Paulo, desde o início da quarentena, 1.001 estabelecimentos foram interditados por descumprirem as regras vigentes. Destes, 600 são bares, restaurantes, lanchonetes e cafeterias.                </p>
-              </div>
-            </li>
-
-            <li data-aos="fade-up" data-aos-delay="200">
-              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#accordion-list-3"
-                class="collapsed">O que fazer caso meu estabelecimento seja interditado? <i
-                  class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="accordion-list-3" class="collapse" data-parent=".accordion-list">
-                <p>
-                  Uma solicitação de desinterdição formal deve ser apresentada à subprefeitura da região de onde se encontra o estabelecimento.
-                </p>
-              </div>
-            </li>
-
-            <li data-aos="fade-up" data-aos-delay="300">
-              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#accordion-list-4"
-                class="collapsed">Qual deve ser o horário de funcionamento dos restaurantes? <i
-                  class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="accordion-list-4" class="collapse" data-parent=".accordion-list">
-                <p>
-                  A cena de bares e restaurante só pode ser aberto até as 17h. Em outras cidades da região metropolitana, porém, isso já é diferente. As prefeituras de Santo André e São Caetano do Sul, por exemplo, autorizaram a ampliação dos horários de funcionamento.
-                </p>
-              </div>
-            </li>
-
-            <li data-aos="fade-up" data-aos-delay="400">
-              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#accordion-list-5"
-                class="collapsed">Quem são os responsáveis pelo novo protocolo? <i
-                  class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="accordion-list-5" class="collapse" data-parent=".accordion-list">
-                <p>
-                  Associação Brasileira de Bares e Restaurantes é a instituição responsável por desenvolver o protocolo. Sua implementação, a nível municipal, depende, porém, de aprovação por parte do Sindicato de Restaurantes e Bares de São Paulo e do governo municipal.
-                </p>
-              </div>
-            </li>
-
-            <li data-aos="fade-up" data-aos-delay="500">
-              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#accordion-list-6"
-                class="collapsed">Preciso de algum certificado para voltar a funcionar? <i
-                  class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="accordion-list-6" class="collapse" data-parent=".accordion-list">
-                <p>
-                  Não precisa, apenas siga os protocolos corretamente e fique atento(a) às atualizações das autoridades locais quanto à reabertura.
-                </p>
-              </div>
-            </li>
-
+            {{/each}}
           </ul>
         </div>
 

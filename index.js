@@ -6,8 +6,6 @@ const compression = require("compression");
 const cookieSession = require("cookie-session");
 const cookieParser = require('cookie-parser');
 const expressMongoDb = require('express-mongo-db');
-const { ObjectId } = require("mongodb");
-const moment = require("moment");
 
 var app = express();
 app.set('env', 'development');
@@ -32,62 +30,17 @@ app.use(
         keys: [keys.COOKIE_KEY]
     })
 );
-// aqui crie uma rota (mudar o que está em laranja)
+
+// rota default
 app.get(`/`, async(req, res) => {
-    res.render(`landing`, { layout: null });
+    var faq_questions = await req.db.collection('faq_questions').find({}).toArray();
+    res.render(`landing`, { layout: null, questions: faq_questions });
 });
 
 // adminController definirá o comportamento da rota /admin (entende-se localhost:9000/admin)
 app.use("/admin", require("./src/controllers/adminController")(app));
 
-app.get(`/menu`, async(req, res) => {
-    res.render(`main/menu`);
-});
-
-app.route('/questionario/:testId').get(async(req, res) => {
-    var test = await req.db.collection('tests').findOne({ _id: new ObjectId(req.params.testId) });
-    var questions = test.questions;
-    var totalWeight = 0,
-        points = 0;
-
-    for (let i = 0; i < questions.length; i++) {
-        console.log(questions[i]);
-        totalWeight += questions[i].weight;
-        if (questions[i].answer == 'SIM') points += questions[i].weight;
-        else if (questions[i].answer != 'NÃO') {
-            if (i == 1) {
-                var correct = Math.round(parseFloat(questions[0].answer) * 0.4);
-                var resp = parseFloat(questions[i].answer);
-                if (resp <= correct) points += questions[i].weight;
-                else if (Math.round(parseFloat(questions[0].answer) * 0.41) < resp && resp < Math.round(parseFloat(questions[0].answer) * 0.5)) points += questions[i].weight - 1;
-                else if (Math.round(parseFloat(questions[0].answer) * 0.51) < resp && resp < Math.round(parseFloat(questions[0].answer) * 0.6)) points += questions[i].weight - 2;
-                else if (Math.round(parseFloat(questions[0].answer) * 0.61) < resp && resp < Math.round(parseFloat(questions[0].answer) * 0.7)) points += questions[i].weight - 3;
-                else if (Math.round(parseFloat(questions[0].answer) * 0.71) < resp && resp < Math.round(parseFloat(questions[0].answer) * 0.8)) points += questions[i].weight - 4;
-            }
-        }
-    }
-
-    res.render(`main/resultado`, {
-        test: test,
-        totalWeight: totalWeight,
-        points: points,
-        percentage: (100 * points) / totalWeight
-    });
-
-});
-
-app.route('/questionario').get(async(req, res) => {
-    var questions = await req.db.collection('questions').find({}).toArray();
-    res.render(`main/questionario`, {
-        questions: questions
-    });
-}).post(async(req, res) => {
-    var data = req.body;
-    data.date = moment().toISOString();
-    data.fdate = moment().format('DD/MM/YYYY [às] HH:mm');
-    await req.db.collection('tests').insertOne(data);
-    res.send({ success: true, id: data._id.toString() });
-});
+app.use("/client", require("./src/controllers/clientController")(app));
 
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => { console.log(`Listening on port`, PORT); })
