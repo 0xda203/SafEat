@@ -278,7 +278,7 @@
 
                 axios.post('', {questions: questions}).then((res) => {
                     setTimeout(() => {
-                        window.location.replace(`/client/questionario/${res.data.id}`);
+                        window.location.replace(`/client/questionario/resultado/${res.data.id}`);
                     }, 500);
                 });
 
@@ -308,7 +308,7 @@
 
                     axios.post('', {questions: questions}).then((res) => {
                         setTimeout(() => {
-                            window.location.replace(`/client/resultado/${res.data.id}`);
+                            window.location.replace(`/client/questionario/resultado/${res.data.id}`);
                         }, 500);
                     });
 
@@ -394,7 +394,7 @@
 
                     axios.post('/questionario', {questions: questions}).then((res) => {
                         setTimeout(() => {
-                            window.location.replace(`/questionario/${res.data.id}`);
+                            window.location.replace(`/questionario/resultado/${res.data.id}`);
                         }, 500);
                     });
 

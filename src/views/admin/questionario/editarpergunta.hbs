@@ -25,6 +25,15 @@
             {{/each}}
         </select>
     </div>
+     <div class="form-group">
+    <label for="exampleFormControlTextarea1">Texto certo</label>
+    <textarea class="form-control" id="wrongText" rows="3"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Texto errado</label>
+    <textarea class="form-control" id="rightText" rows="3"></textarea>
+  </div>
     <div class="form-group">
         <label for="illustration">Link ilustração</label>
         <input id="illustration" type="text" class="form-control" autocomplete="off" value="{{data.illustration}}" name="illustration" required>
@@ -134,6 +143,8 @@
                     bgShape: $(`#bgShape`).val() == "true" ? true : false,
                     question: $(`#question`).val(),
                     method: $(`#method`).val(),
+                    rightText: $(`#rightText`).val(),
+                    wrongText: $(`#wrongText`).val(),
                     type: $(`#type`).val(),
                     function: $('#additionalLogic').val(), // .replaceAll(`/n`, '')
                     hasDependency: $('#hasDependency').val() == "true" ? true : false,

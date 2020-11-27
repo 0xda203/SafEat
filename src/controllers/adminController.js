@@ -26,6 +26,8 @@ module.exports = function(app) {
     adminRouter.use("/questionario", require('./admin/quizController.js'));
 
     adminRouter.use("/faq", require('./admin/faqController.js'));
+    adminRouter.use("/forum", require('./admin/forumController.js'));
+
 
     return adminRouter;
 }

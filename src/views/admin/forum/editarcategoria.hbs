@@ -1,20 +1,15 @@
 {{#section 'css'}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
 {{/section}}
 
 <h1>{{title}}</h1>
 <form action="" role="form" method="POST" id="questionForm">
     <div class="form-group">
-        <label for="question">Pergunta</label>
-        <input id="question" type="text" class="form-control" autocomplete="off" name="question"
+        <label for="question">Nome</label>
+        <input id="name" type="text" class="form-control" value="{{data.name}}" autocomplete="off" name="name"
              required>
     </div>
-    <div class="form-group">
-        <label for="role">Resposta</label>
-        <textarea cols="40" rows="5" id="answer" class="form-control" > </textarea>
-    </div>
-    <button type="submit" class="btn btn-primary my-1">Cadastrar pergunta/resposta</button>
+    <button type="submit" class="btn btn-primary my-1">Editar categoria</button>
 </form>
 
 {{#section 'jquery'}}
@@ -46,15 +41,14 @@
             evt.preventDefault();
             axios({
                 method: 'post',
-                url: `/admin/faq/perguntas/new`,
+                url: ``,
                 data: {
-                    question: $(`#question`).val(),
-                    answer: $('#answer').val()
+                    name: $(`#name`).val(),
                 }
             }).then((response) => {
                 var data = response.data;
                 if (data.success) {
-                    toastr.success('Discussão iniciada com sucesso', 'Sucesso');
+                    toastr.success('Categoria editada com sucesso', 'Sucesso');
                 } else {
                     toastr.error('Algum erro ocorreu... Tente novamente mais tarde', 'Erro!');
                 }

@@ -1,4 +1,5 @@
 {{#section 'css'}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css" integrity="sha512-KbfxGgOkkFXdpDCVkrlTYYNXbF2TwlCecJjq1gK5B+BYwVk7DGbpYi4d4+Vulz9h+1wgzJMWqnyHQ+RDAlp8Dw==" crossorigin="anonymous" />
 <style>
     .intro-section {
@@ -54,7 +55,9 @@
     }
 
     .intro-section .container2 ul li a {
-        color: black;
+        color: black  $('.click2edit').summernote('destroy');
+
+                    ;Discssão iii
     }
 
 
@@ -73,30 +76,116 @@
         margin-bottom: 0px;
         font-size: 2.5em;
     }
+
+    .padd {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .border {
+        border: solid 1px black;
+        border-radius: 5px;
+    }
+
+    .discussion-body {
+        padding-left: 4px;
+    }
+
+    .form-control {
+        font-size: 15px !important;
+    }
+
 </style>
 {{/section}}
 
 <section class="intro-section">      
     <div class="container2">
-        <div class="row align-items-center text center text-md-left">
-            <div class="col-md-11" data-aos="fade-left">
-              <div class="text-area">
-                    <h1>Iniciar nova discussão</h1>
-                    <ul>
-                        <div class="summernote"></div>
+        <div class="padd">
+            <div class="row align-items-center text center text-md-left border">
+                <div class="col-md-6 col-lg-7 col-xl-10">
+                    <div style="padding: 20px 10px;">
+                        <div style="margin-bottom: 15px;">
+                            <h2>Iniciar nova discussão</h2>
+                        </div>
 
-                    </ul>
+                        <div class="discussion-body">
+                            <form>
+                                <div class="form-group">
+                                    <label style="color: gray; font-weigth: bold;" for="title">Título</label>
+                                    <input type="text" id="title" name="title" class="form-control" placeholder="Insira um título">
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: gray; font-weigth: bold;" for="description">Descrição</label>
+                                    <div name="description" class="summernote"></div>
+                                </div>
+
+                                <div style="text-align: center;">
+                                    <button id="save" type="submit" style="font-size: 15px;" class="btn btn-dark">Enviar</button>
+                                    <a href="/client/forum" style="font-size: 15px;" class="btn btn-danger text-white">Cancelar</a>
+                                </div>                               
+
+                            </form>
+
+                        </div>
+                    </div>
+                    
                 </div>
-            </div>            
+                <div class="col-md-2 col-lg-2 mb-2 mb-md-0" style="align-self: flex-start; margin-top: calc(2rem + 15px + 2rem); padding-left: 0px;">
+                    <form>
+                        <div class="form-group">
+                            <label style="color: gray; font-weigth: bold;" for="title">Categoria</label>
+                            <select name="type" class="form-control" id="type">
+                                {{#each categories}}
+                                    <option value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>                     
+
+                    </form>
+                </div>            
+            </div>
         </div>
+        
     </div>
 </section>
 
 {{#section 'jquery'}}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js" integrity="sha512-kZv5Zq4Cj/9aTpjyYFrt7CmyTUlvBday8NGjD9MxJyOY/f2UfRYluKsFzek26XWQaiAp7SZ0ekE7ooL9IYMM2A==" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
-  $('.summernote').summernote();
-});
+        $('.summernote').summernote({
+            height: 300,   //set editable area's height
+            codemirror: { // codemirror options
+                theme: 'monokai'
+            }
+        });
+
+        $('#save').click(e => {
+            e.preventDefault();
+            axios({
+                method: 'post',
+                url: `/client/forum/nova-discussao`,
+                data: {
+                    title: $(`#title`).val(),
+                    data:  $('.summernote').summernote('code'),
+                    sectionId: $('#type').val(),
+                    sectionName: $('#type :selected').text()
+                }
+            }).then((response) => {
+                var data = response.data;
+                if (data.success) {
+                    {{!-- $('.summernote').summernote('destroy'); --}}
+                    toastr.success('Discussão iniciada com sucesso', 'Sucesso');
+                } else {
+                    toastr.error('Algum erro ocorreu... Tente novamente mais tarde', 'Erro!');
+                }
+            }, (error) => {
+                toastr.error('Algum erro ocorreu... Tente novamente mais tarde', 'Erro!');
+            });
+
+        });
+    });
 </script>
 {{/section}}

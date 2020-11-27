@@ -1,0 +1,264 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css"
+    integrity="sha512-KbfxGgOkkFXdpDCVkrlTYYNXbF2TwlCecJjq1gK5B+BYwVk7DGbpYi4d4+Vulz9h+1wgzJMWqnyHQ+RDAlp8Dw=="
+    crossorigin="anonymous" />
+<style>
+    .intro-section {
+        height: 100vh;
+        padding-top: 120px;
+    }
+
+    @media (max-width: 767px) {
+        .intro-section .container2 .txt {
+            padding-left: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        .intro-section .container2 .img {
+            display: none;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 1350px) {
+        .intro-section .container2 .text-area h1:nth-child(1) {
+            font-size: 2rem !important;
+        }
+
+    }
+
+    .intro-section .container2 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .intro-section .container2 .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .intro-section .container2 .text-area h1 {
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+        letter-spacing: 0.04em;
+        font-weight: 900;
+        color: #140779;
+        text-transform: uppercase;
+    }
+
+    .intro-section .container2 ul {
+        list-style: none;
+        margin-top: 20px;
+    }
+
+
+    .intro-section .container2 ul li a {
+        color: black;
+    }
+
+
+    .intro-section .container2 .txt {
+        margin-top: 0;
+    }
+
+    .intro-section .container2 .img {
+        margin-top: 70px;
+        padding-right: 30px;
+        padding-left: 40px;
+    }
+
+
+    .intro-section .container2 .text-area h1:nth-child(1) {
+        margin-bottom: 0px;
+        font-size: 2.5em;
+    }
+
+    .padd {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .border {
+        border: solid 1px black;
+        border-radius: 5px;
+    }
+
+    .discussion-body {
+        padding-left: 4px;
+    }
+
+    .form-control {
+        font-size: 15px !important;
+    }
+
+    .comment-box {
+        width: 100%;
+        float: left;
+        height: 100%;
+        background-color: #FAFAFA;
+        padding: 10px 10px 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+
+    .commenter-pic {
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        border-radius: 100%;
+        border: 2px solid #fff;
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    .commenter-name {
+        display: inline-block;
+        position: relative;
+        top: -20px;
+        left: 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    p.comment-txt {
+        font-size: 15px;
+        border-bottom: 1px solid #ddd;
+        padding: 0px 0px 15px;
+    }
+
+    .comment-meta {
+        font-size: 14px;
+        color: #333;
+        padding: 2px 5px 0px;
+        line-height: 20px;
+        float: right;
+    }
+
+    .comment-time {
+        font-weight: lighter;
+        font-size: 1rem;
+        color: rgb(39, 39, 39);
+    }
+
+    button {
+        background-color: transparent;
+        border: none;
+    }
+
+    .replies {
+        padding-left: 10px;;
+    }
+</style>
+{{/section}}
+
+<section class="intro-section">
+    <div class="container2">
+        <div class="padd">
+            <div class="row align-items-center text center text-md-left border" style="padding: 20px 20px;">
+                <div style="margin-bottom: 15px;">
+                    <h2><a href="/client/forum/">Discussões > </a>  {{postData.title}}</h2>
+                </div>
+                <div class="col-12">
+                    <div class="comment-box">
+                        <span class="commenter-pic">
+                            <img src="/images/user-icon.jpg" class="img-fluid">
+                        </span>
+                        <span class="commenter-name">
+                            <a href="#">Usuário</a> <span class="comment-time">às {{postData.fdate}}</span>
+                        </span>
+                        <p class="comment-txt more">{{{postData.data}}}</p>
+                        <div class="comment-meta">
+                            <button class="comment-like"><i class="fas fa-heart" style="margin-right: 10px"
+                                    aria-hidden="true"></i>0</button>
+                        </div>
+                    </div>
+
+                    <div class="replies">
+                        {{#each replies}}
+                        <div class="comment-box" id='{{this._id}}' name="{{this._id}}">
+                            <span class="commenter-pic">
+                                <img src="/images/user-icon.jpg" class="img-fluid">
+                            </span>
+                            <span class="commenter-name">
+                                <a href="#">Usuário {{this.user}}</a> <span class="comment-time">às {{this.fdate}}</span>
+                            </span>
+                            <p class="comment-txt more">{{{this.data}}}</p>
+                            <div class="comment-meta">
+                                <button class="comment-like"><i class="fas fa-heart" style="margin-right: 10px"
+                                        aria-hidden="true"></i>0</button>
+                            </div>
+                        </div>
+
+                        {{/each}}
+                    </div>
+
+                    <div class="post-reply">
+                        <div style="margin-bottom: 15px;">
+                            <h2>Adicionar comentário</h2>
+                        </div>
+                        <div class="form-group">
+                            <div name="description" class="summernote"></div>
+                        </div>
+
+                        <button id="save" type="submit" style="font-size: 15px;" class="btn btn-dark">Enviar</button>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{{#section 'jquery'}}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"
+    integrity="sha512-kZv5Zq4Cj/9aTpjyYFrt7CmyTUlvBday8NGjD9MxJyOY/f2UfRYluKsFzek26XWQaiAp7SZ0ekE7ooL9IYMM2A=="
+    crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $('.summernote').summernote({
+            height: 150,   //set editable area's height
+            codemirror: { // codemirror options
+                theme: 'monokai'
+            }
+        });
+
+        $('#save').click(e => {
+            e.preventDefault();
+            axios({
+                method: 'post',
+                url: `/client/forum/discussions/{{postData._id}}/new-reply`,
+                data: {
+                    data: $('.summernote').summernote('code'),
+                }
+            }).then((response) => {
+                var data = response.data;
+                if (data.success) {
+                    toastr.success('Comentário adicionado com sucesso', 'Sucesso');
+                    setTimeout(function() {
+                        window.location.href(`/client/forum/discussions/{{postData._id}}#${data.id}`);
+                    }, 1000);
+                } else {
+                    toastr.error('Algum erro ocorreu... Tente novamente mais tarde', 'Erro!');
+                }
+            }, (error) => {
+                toastr.error('Algum erro ocorreu... Tente novamente mais tarde', 'Erro!');
+            });
+
+        });
+
+
+    });
+</script>
+{{/section}}

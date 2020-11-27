@@ -13,6 +13,9 @@ quizRouter.route('/resultado/:testId')
             points = 0,
             total = 0;
 
+        var wrong = [];
+        var right = [];
+
         for (let i = 0; i < questions.length; i++) {
             if (questions[i].ignored) continue;
 
@@ -20,14 +23,21 @@ quizRouter.route('/resultado/:testId')
             totalWeight += parseInt(questions[i].weight);
 
             var question = await req.db.collection('questions').findOne({ _id: new ObjectId(questions[i]._id) });
+            let p = points + 0;
             eval(`points += parseInt(${question.function}(questions, i));`); // computa resultado
+
+            var c = p - points;
+            if (question.weight != 0 && question.weight != c) wrong.push(question);
+            else right.push(question);
         }
 
         res.render(`main/resultado`, {
             test: test,
             totalWeight: totalWeight,
             points: points,
-            percentage: (100 * points) / totalWeight
+            percentage: (100 * points) / totalWeight,
+            right: right,
+            wrong: wrong
         });
 
     });

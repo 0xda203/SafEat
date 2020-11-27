@@ -1,0 +1,174 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
+<style>
+    .intro-section {
+        height: 100vh;
+        padding-top: 120px;
+    }
+
+    @media (max-width: 767px) {
+        .intro-section .container2 .txt {
+            padding-left: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        .intro-section .container2 .img {
+            display: none;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 1350px) {
+        .intro-section .container2 .text-area h1:nth-child(1) {
+            font-size: 2rem !important;
+        }
+
+    }
+
+    .intro-section .container2 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .intro-section .container2 .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .intro-section .container2 .text-area h1 {
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+        letter-spacing: 0.04em;
+        font-weight: 900;
+        color: #140779;
+        text-transform: uppercase;
+    }
+
+    .intro-section .container2 ul {
+        list-style: none;
+        margin-top: 20px;
+    }
+
+
+    .intro-section .container2 ul li a {
+        color: black;
+    }
+
+
+    .intro-section .container2 .txt {
+        margin-top: 0;
+    }
+
+    .intro-section .container2 .img {
+        margin-top: 70px;
+        padding-right: 30px;
+        padding-left: 40px;
+    }
+
+
+    .intro-section .container2 .text-area h1:nth-child(1) {
+        margin-bottom: 0px;
+        font-size: 2.5em;
+    }
+
+    .padd {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .border {
+        border: solid 1px black;
+        border-radius: 5px;
+    }
+
+    .discussion-body {
+        padding-left: 4px;
+    }
+
+    .form-control {
+        font-size: 15px !important;
+    }
+</style>
+{{/section}}
+
+<section class="intro-section">
+    <div class="container2">
+        <div class="padd">
+            <div class="row align-items-center text center text-md-left border">
+                <div class="col-md-6 col-lg-7 col-xl-12">
+                    <div style="padding: 20px 10px;">
+                        <div style="margin-bottom: 15px; margin-left: 20px;">
+                            <h2>Discussões</h2>
+                        </div>
+
+                        <div class="discussion-body">
+
+                            <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th>Titulo</th>
+                                        <th>Iniciada por</th>
+                                        <th>Respostas</th>
+                                        <th>Tag</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each data}}
+                                    <tr class="{{@index}}">
+                                        <td><i class="far fa-star"></i><a
+                                                href="/client/forum/discussions/{{this._id}}"><span
+                                                    class="ml-2">{{this.title}}</span></a></td>
+                                        <td>{{this.user}}</td>
+                                        <td>
+                                            {{this.replies.length}}
+                                        </td>
+                                        <td>
+                                            <a href="#" class="badge badge-warning">{{this.sectionName}}</a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{{#section 'jquery'}}
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#dataTable');
+        table = table.DataTable({
+            responsive: true,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+            language: {
+                'paginate': {
+                    'previous': 'Anterior',
+                    'next': 'Próxima',
+                },
+                'processing': 'Processando...',
+                'loadingRecords': 'Carregando...',
+                'info': 'Mostrando página _PAGE_ de _PAGES_',
+                'zeroRecords': 'Nenhuma discussão encontrada. Aproveite para começar uma <a target="_blank" href="/client/forum/nova-discussao">agora.</a>',
+                'lengthMenu': 'Mostrando _MENU_ registros por página',
+                'infoEmpty': 'Nenhum registro disponível',
+                'infoFiltered': '(filtrado de um total de _MAX_ registros)',
+                'search': 'Buscar'
+            },
+        });
+    });
+</script>
+{{/section}}

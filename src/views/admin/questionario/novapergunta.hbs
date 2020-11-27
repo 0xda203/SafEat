@@ -17,7 +17,7 @@
             <option value="false" selected>Não</option>
         </select>
     </div>
-    <div id="dependency-wrapper" class="form-group">
+        <div id="dependency-wrapper" class="form-group">
         <label for="dependency">Pergunta pai</label>
         <select name="dependency" class="form-control" id="dependency">
             {{#each questions}}
@@ -25,6 +25,15 @@
             {{/each}}
         </select>
     </div>
+     <div class="form-group">
+    <label for="exampleFormControlTextarea1">Texto certo</label>
+    <textarea class="form-control" id="wrongText" rows="3"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Texto errado</label>
+    <textarea class="form-control" id="rightText" rows="3"></textarea>
+  </div>
         <div class="form-group">
         <label for="illustration">Link ilustração</label>
         <input id="illustration" type="text" value="/img/perguntas/people.png" class="form-control" autocomplete="off" name="illustration" required>
@@ -62,6 +71,7 @@
             <option value="text">Texto</option>
         </select>
     </div>
+
         <div class="form-group">
         <label for="role">Função pontuação</label>
         <textarea cols="40" rows="10" id="additionalLogic" class="form-control" >
@@ -127,6 +137,8 @@ function(questions, idx) {
                     bgShape: $(`#bgShape`).val() == "true" ? true : false,
                     question: $(`#question`).val(),
                     method: $(`#method`).val(),
+                    rightText: $(`#rightText`).val(),
+                    wrongText: $(`#wrongText`).val(),
                     hasDependency: $('#hasDependency').val(),
                     function: $('#additionalLogic').val(), // .replaceAll(`/n`, '')
                     dependency: $('#dependency').val(),
