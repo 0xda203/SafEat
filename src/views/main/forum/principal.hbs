@@ -1,5 +1,6 @@
 {{#section 'css'}}
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
+<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 <style>
     .intro-section {
         height: 100vh;
@@ -71,13 +72,7 @@
     }
 
     .padd {
-        padding-left: 40px;
-        padding-right: 40px;
-    }
-
-    .border {
-        border: solid 1px black;
-        border-radius: 5px;
+        padding: 0px 100px;
     }
 
     .discussion-body {
@@ -87,52 +82,112 @@
     .form-control {
         font-size: 15px !important;
     }
+
+    .mt-auto {
+    }
+
+    .bx-info-circle {
+        font-size: 20px !important;
+    }
+
+    .header-area {
+        height: 55px; background-color: rgb(246, 248, 250); width: 100%; display: flex;
+        border: solid 1px #e6e8ec;
+        border-radius: 5px 5px 0px 0px;
+    }
+
+    .header-area div {
+        margin: auto 0 !important;
+        
+    }
+
+    .discussion-area {
+        border: solid 1px #e6e8ec;
+        border-bottom: 0;
+        height: 60px;
+        flex-direction: column;
+        display: flex;
+        padding: 8px;
+    }
+
+    .discussion-area .area {
+        margin: auto 0 !important;
+    }
+
+    .discussion-area:last-child {
+        border-bottom: solid 1px #e6e8ec;
+        border-radius: 0px 0px 5px 5px;
+    }
+
+    .discussion-area i {
+        color: rgb(34, 134, 58);
+    }
+
+    .discussion-area:hover {
+        background-color: rgb(246, 248, 250);
+    }
+    
+    .discussion-header {
+        font-weight: 500;
+        position: absolute;
+        margin-top: -4px;
+        margin-left: 5px;
+    }
+
+    .sub {
+        font-size: 12px;
+        color: rgb(88, 96, 105);
+        position: absolute;
+        margin-top: 18px;
+    }
+
+    .m-extra {
+        margin-top: -2px !important;
+    }
+
+    .comment {
+        color: rgb(88, 96, 105) !important;
+        font-size: 12px;
+        font-weight: 500;
+        position: absolute;
+        margin-top: -20px;
+        right: 10px;
+    }
+
+    .link {
+        color: black;
+    }
 </style>
 {{/section}}
 
 <section class="intro-section">
     <div class="container2">
         <div class="padd">
-            <div class="row align-items-center text center text-md-left border">
-                <div class="col-md-6 col-lg-7 col-xl-12">
-                    <div style="padding: 20px 10px;">
-                        <div style="margin-bottom: 15px; margin-left: 20px;">
-                            <h2>Discussões</h2>
-                        </div>
-
-                        <div class="discussion-body">
-
-                            <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
-                                <thead class="bg-light">
-                                    <tr>
-                                        <th>Titulo</th>
-                                        <th>Iniciada por</th>
-                                        <th>Respostas</th>
-                                        <th>Tag</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each data}}
-                                    <tr class="{{@index}}">
-                                        <td><i class="far fa-star"></i><a
-                                                href="/client/forum/discussions/{{this._id}}"><span
-                                                    class="ml-2">{{this.title}}</span></a></td>
-                                        <td>{{this.user}}</td>
-                                        <td>
-                                            {{this.replies.length}}
-                                        </td>
-                                        <td>
-                                            <a href="#" class="badge badge-warning">{{this.sectionName}}</a>
-                                        </td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-
+            <div class="row align-items-center text center text-md-left">
+                <div class="col-md-12 col-lg-12 col-xl-12" style="padding: 0;">
+                    <div class="header-area">
+                        <div>                       
+                            <div style="margin-top: 5px !important;">
+                                <i class='bx bx-info-circle ml-3'></i>
+                                <span class="text-bold discussion-header m-extra">{{data.length}} Discussões</span>
+                            </div>
                         </div>
                     </div>
-
+                    <div class="discussions">
+                        {{#each data}}
+                            <div class="discussion-area" style="padding-bottom: 15px !important;">
+                                <div class="area">                       
+                                    <i class='bx bx-info-circle ml-3'></i>
+                                    <div class="comment">
+                                        <i class='bx bx-comment'></i>
+                                        <span>{{this.replies.length}} comentários</span>
+                                    </div>
+                                    <span class="text-bold discussion-header"><a class="link" href="/client/forum/discussions/{{this._id}}">{{this.title}}</a> <a style="margin-left: 5px;" class="badge badge-warning">{{this.sectionName}}</a></span>
+                                    <span class="sub">#{{inc @index}} no dia {{this.fdate}}</span>
+                                </div>
+                            </div> 
+                        {{/each}} 
+                    </div>
                 </div>
 
             </div>
