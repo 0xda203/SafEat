@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="index">
+
+    <title>Cadastro SafEat</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href='https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css'>
+
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="/css/auth/signup.css">
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSABvRMDvBmN_oEVgyfSTDKQQu_yJPqCE&libraries=places&callback=initMap"
+        defer></script>
+    <style>
+        .card-wrapper {
+            position: relative;
+            width: 100%;
+            margin: 0;
+            -webkit-perspective: 800px;
+            perspective: 800px;
+        }
+
+
+        .card-wrapper .card-rotating .front {
+            z-index: 1;
+        }
+
+        .card-wrapper .card-rotating .face {
+            position: absolute;
+            z-index: 2;
+            width: 100%;
+            background: #fff;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        .card-wrapper .card-up {
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .card-wrapper .card-up img {
+            vertical-align: middle;
+        }
+
+        .card-img,
+        .card-img-top {
+            border-top-left-radius: calc(0.25rem - 1px);
+            border-top-right-radius: calc(0.25rem - 1px);
+        }
+
+        .card-img,
+        .card-img-top,
+        .card-img-bottom {
+            -ms-flex-negative: 0;
+            flex-shrink: 0;
+            width: 100%;
+        }
+
+        .card-wrapper .avatar {
+            display: block;
+            width: 120px;
+            margin-top: -60px;
+            overflow: hidden;
+        }
+
+        .card-wrapper .avatar img {
+            width: 100%;
+            background: none repeat scroll 0 0 #fff;
+            border: 5px solid #fff;
+        }
+
+        .rounded-circle {
+            border-radius: 50% !important;
+        }
+
+        .card-body {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-radius: 0 !important;
+        }
+
+        .card-body {
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 1.25rem;
+        }
+
+        body {
+            width: 100vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="float: left; height: 100vh; width: 30vw; background-color: #f3f3f3; padding: 15px 20px;">
+        <div class="row">
+            <div class="col-md-12 mx-auto text-center form p-4">
+                <img src="/img/logo.svg" class="w-60">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mx-auto text-center form p-4">
+                <form id="signupForm">
+                    <input type="hidden" name="_csrf" id="csrfToken" value="{{csrfToken}}">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-map text-muted"></i>
+                                </span>
+                            </div>
+                            <input id="autocomplete" placeholder="Digite um local"
+                          y      class="form-control bg-white border-left border-md" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block"
+                            style="background-color: #ed7e43; border-color: #   db763f;">
+                            Prosseguir
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div style="float: right; height: 100vh; width: 70vw; background-color: black;">
+        <div id="map" style="height: 100%;"></div>
+    </div>
+
+    {{!-- JS Content --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js'></script>
+
+    <script>
+
+
+        let map;
+        let places;
+        let infoWindow;
+        let marker;
+        let autocomplete;
+        const countryRestrict = { country: "br" };
+
+        const br = {
+            center: { lat: -14.2, lng: -51.9 },
+            zoom: 3,
+        };
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: br.zoom,
+                center: br.center,
+                mapTypeControl: false,
+                panControl: false,
+                zoomControl: false,
+                styles: [
+                    {
+                        "featureType": "administrative.country",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "visibility": "simplified"
+                            },
+                            {
+                                "hue": "#ff0000"
+                            }
+                        ]
+                    }
+                ]
+            });
+
+            infoWindow = new google.maps.InfoWindow({
+                content: document.getElementById("info-content"),
+            });
+
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById("autocomplete"),
+                {
+                    types: [],
+                    componentRestrictions: countryRestrict,
+                }
+            );
+            places = new google.maps.places.PlacesService(map);
+            autocomplete.addListener("place_changed", onPlaceChanged);
+
+        }
+
+        // When the user selects a city, get the place details for the city and
+        // zoom the map in on the city.
+        function onPlaceChanged() {
+            const place = autocomplete.getPlace();
+
+            if (place.geometry) {
+                map.panTo(place.geometry.location);
+                map.setZoom(15);
+                setMarker(place);
+            } else {
+                document.getElementById("autocomplete").placeholder = "Digite um local";
+            }
+        }
+
+        function setMarker(place) {
+            marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location,
+                title: place.name,
+                draggable: true,
+
+            });
+
+            infowindow = new google.maps.InfoWindow({
+                content: "Estabelecimento está aqui"
+            });
+
+            marker.addListener('click', () => {
+                infowindow.open(map, marker);
+            });
+
+            infowindow.open(map, marker);
+            setTimeout(() => {
+                infowindow.close();
+                moveBus(map, marker);
+            }, 2000);
+        }
+
+        function moveBus(map, marker) {
+        };
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        $("#signupForm").submit(function (e) {
+            e.preventDefault();
+
+            if (!marker) {
+                Swal.fire(
+                    'Atenção!',
+                    'Selecione umm endereço antes de continuar',
+                    'warning'
+                );   
+            }
+
+            axios({
+                method: 'post',
+                url: `/auth/signup/step3/{{clientId}}`,
+                data: {
+                    position: marker.position,
+                    address: $('#autocomplete').val(),
+                    _csrf: $(`#csrfToken`).val(),
+                }
+            }).then((response) => {
+                var data = response.data;
+                if (data.success) {
+                    toastr.success('Registro finalizado com sucesso!', 'Sucesso');
+                    setTimeout(() => {
+                        window.location.href = `/client/menu`;
+                    }, 3000);
+                } else {
+                    toastr.error(data.message, 'Erro!');
+                }
+            }, (error) => {
+                toastr.error(data.message, 'Erro!');
+            });
+
+        });
+
+    </script>
+</body>
+
+
+</html>

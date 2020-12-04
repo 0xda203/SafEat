@@ -7,10 +7,11 @@ const clientRouter = express.Router();
 module.exports = function(app) {
     // Define um middleware: define uma função que irá processar necessariamente cada uma das requisições
     clientRouter.use((req, res, next) => {
-        // if (!req.user ) return res.status(401).redirect("/auth/signin"); // desvia o usuario para pagina de login caso nao esteja autenticado. está comentado no momento pois a autenticação não está implementada, logo não faz sentido
+        if (!req.user) return res.status(401).redirect("/auth/signin"); // desvia o usuario para pagina de login caso nao esteja autenticado. está comentado no momento pois a autenticação não está implementada, logo não faz sentido
         /*  Depois de processar, prossegue com requisição normalmente. Se o if acima, porém, for acionado, a instrução return 
             fará com que next() nunca seja acionado, o que não é problema, pois a instrução return vem acompanhada de uma instrução de redirecionamento.
             Um middleware sem next ou alguma instrução de redirecionamento gera erro de timeout */
+        res.locals.user = req.user;
         next(); // 
     });
 

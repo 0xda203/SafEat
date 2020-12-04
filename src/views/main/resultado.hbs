@@ -189,66 +189,65 @@
         padding: 0.4em 3rem;
     }
 
-    	.modal.left .modal-dialog,
-	.modal.right .modal-dialog {
-		position: fixed;
-		margin: auto;
-		width: 1000px;
-		height: 100%;
-		-webkit-transform: translate3d(0%, 0, 0);
-		    -ms-transform: translate3d(0%, 0, 0);
-		     -o-transform: translate3d(0%, 0, 0);
-		        transform: translate3d(0%, 0, 0);
-	}
+    .modal.left .modal-dialog,
+    .modal.right .modal-dialog {
+        position: fixed;
+        margin: auto;
+        width: 1000px;
+        height: 100%;
+        -webkit-transform: translate3d(0%, 0, 0);
+        -ms-transform: translate3d(0%, 0, 0);
+        -o-transform: translate3d(0%, 0, 0);
+        transform: translate3d(0%, 0, 0);
+    }
 
-	.modal.left .modal-content,
-	.modal.right .modal-content {
-		height: 100%;
-		overflow-y: auto;
-	}
-	
-	.modal.left .modal-body,
-	.modal.right .modal-body {
-		padding: 15px 15px 80px;
-	}
+    .modal.left .modal-content,
+    .modal.right .modal-content {
+        height: 100%;
+        overflow-y: auto;
+    }
 
-/*Left*/
-	.modal.left.fade .modal-dialog{
-		left: -320px;
-		-webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
-		   -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
-		     -o-transition: opacity 0.3s linear, left 0.3s ease-out;
-		        transition: opacity 0.3s linear, left 0.3s ease-out;
-	}
-	
-	.modal.left.fade.in .modal-dialog{
-		left: 0;
-	}
-        
-/*Right*/
-	.modal.right.fade .modal-dialog {
-		right: 0px;
-		-webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
-		   -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
-		     -o-transition: opacity 0.3s linear, right 0.3s ease-out;
-		        transition: opacity 0.3s linear, right 0.3s ease-out;
-	}
-	
-	.modal.right.fade.in .modal-dialog {
-		right: 0;
-	}
+    .modal.left .modal-body,
+    .modal.right .modal-body {
+        padding: 15px 15px 80px;
+    }
 
-/* ----- MODAL STYLE ----- */
-	.modal-content {
-		border-radius: 0;
-		border: none;
-	}
+    /*Left*/
+    .modal.left.fade .modal-dialog {
+        left: -320px;
+        -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+        -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+        -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+        transition: opacity 0.3s linear, left 0.3s ease-out;
+    }
 
-	.modal-header {
-		border-bottom-color: #EEEEEE;
-		background-color: #FAFAFA;
-	}
+    .modal.left.fade.in .modal-dialog {
+        left: 0;
+    }
 
+    /*Right*/
+    .modal.right.fade .modal-dialog {
+        right: 0px;
+        -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+        -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+        -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+        transition: opacity 0.3s linear, right 0.3s ease-out;
+    }
+
+    .modal.right.fade.in .modal-dialog {
+        right: 0;
+    }
+
+    /* ----- MODAL STYLE ----- */
+    .modal-content {
+        border-radius: 0;
+        border: none;
+    }
+
+    .modal-header {
+        border-bottom-color: #EEEEEE;
+        background-color: #FAFAFA;
+    }
 </style>
 {{/section}}
 
@@ -289,17 +288,19 @@
                     <div id="aspects">
                         <div class="card" data-aos="fade-left" data-aos-delay="3000">
                             <div class="card-body">
-                    
+
                                 <h2 class="card-title">O que você está fazendo de certo</h2>
                                 <i class="fas fa-check c-green"></i>
-                                <p class="card-text"><a data-toggle="modal" href="#" data-target="#myModal2">Clique para entender</a></p>
+                                <p class="card-text"><a data-toggle="modal" href="#" data-target="#myModal2">Clique para
+                                        entender</a></p>
                             </div>
                         </div>
                         <div class="card mt-3" data-aos="fade-left" data-aos-delay="3000">
                             <div class="card-body">
                                 <h2 class="card-title">O que você está de errado</h2>
                                 <i class="fas fa-times mr-2"></i>
-                                <p  class="card-text"><a data-toggle="modal" href="#" data-target="#myModal3">Clique para entender</a></p>
+                                <p class="card-text"><a data-toggle="modal" href="#" data-target="#myModal3">Clique para
+                                        entender</a></p>
                             </div>
                         </div>
                     </div>
@@ -309,7 +310,7 @@
                             resultado detalhadamente</a>
                     </div>
                     <div id="compare" class="text-center mt-3" data-aos="fade-up" data-aos-delay="3000">
-                        <a href="/client/questionario/responder" class='btn btn-dark text-white btn-block'>Comparar
+                        <a data-toggle="modal" data-target="#exampleModalCenter" class='btn btn-dark text-white btn-block'>Comparar
                             resultado com estabelecimentos próximos</a>
                     </div>
                 </div>
@@ -322,8 +323,8 @@
   Launch demo modal
 </button> --}}
 
-<!-- Modal -->
-{{!-- <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <!-- Modal -->
+    {{!-- <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -343,8 +344,8 @@
   </div>
 </div> --}}
 
-<!-- Modal -->
-{{!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Modal -->
+    {{!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -364,67 +365,106 @@
   </div>
 </div> --}}
 
-	<!-- Modal -->
-	<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Estabelecimentos próximos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{#unless close}}<p style="color: #d6103b; font-weigth: bold; text-align: center;">Nenhum estabelecimento próximo</p>{{/unless}}
+                    {{#each close}}
+                    <div class="card border-danger mb-3" >
+                        <div class="card-body text-danger">
+                            <h5 class="card-title">{{this.fantasyName}}</h5>
+                            <p class="card-text">
+                            <ul class="list-group">
+                                <li class="list-group-item">Localização: {{this.address}}</li>
+                                <li class="list-group-item">Distância: {{this.distance}}</li>
+                                <li class="list-group-item">Pontuação: {{this.percentage}}/100</li>
 
-				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel2">O que você está fazendo de certo</h4>
-                    					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
-				</div>
-
-				<div class="modal-body">
-					{{#each right}}
-                    <div class="card mb-2">
-                        <div class="card-header">
-                            {{inc @index}} - {{this.question}}
+                            </ul>
+                            </p>
                         </div>
-                        <div class="card-body">
-                            <blockquote class="blockquote mb-0">
-                            <p>{{this.rightText}}</p>
-                            </blockquote>
-                        </div>
-                        </div>
+                    </div>
+                    <hr>
                     {{/each}}
-				</div>
-
-			</div><!-- modal-content -->
-		</div><!-- modal-dialog -->
-	</div><!-- modal -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal -->
-	<div class="modal right fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+    <div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
 
-				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel2">O que você está fazendo de errado</h4>
-                    					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel2">O que você está fazendo de certo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
 
-				</div>
+                </div>
 
-				<div class="modal-body">
-					{{#each wrong}}
+                <div class="modal-body">
+                    {{#each right}}
                     <div class="card mb-2">
                         <div class="card-header">
                             {{inc @index}} - {{this.question}}
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
-                            <p>{{this.wrongText}}</p>
+                                <p>{{this.wrongText}}</p>
                             </blockquote>
                         </div>
-                        </div>
+                    </div>
                     {{/each}}
-				</div>
+                </div>
 
-			</div><!-- modal-content -->
-		</div><!-- modal-dialog -->
-	</div><!-- modal -->
-    
-	
+            </div><!-- modal-content -->
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+
+    <!-- Modal -->
+    <div class="modal right fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel2">O que você está fazendo de errado</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+
+                </div>
+
+                <div class="modal-body">
+                    {{#each wrong}}
+                    <div class="card mb-2">
+                        <div class="card-header">
+                            {{inc @index}} - {{this.question}}
+                        </div>
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p>{{this.rightText}}</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+
+            </div><!-- modal-content -->
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+
+
 
 
 </section>
@@ -590,10 +630,10 @@
         setTimeout(async () => {
             $('#top').fadeOut(1000);
             $('#saida').text(risco({{ percentage }}));
-            $('#saida2').text(score({{ percentage }}));
-            situacao({{ percentage }});
-            setInterval(() => {
-                update({{ percentage }});
+    $('#saida2').text(score({{ percentage }}));
+    situacao({{ percentage }});
+    setInterval(() => {
+        update({{ percentage }});
             }, 1000); 
         }, 2000); 
 

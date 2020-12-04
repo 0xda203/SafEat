@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="index">
+
+    <title>Cadastro SafEat</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="/css/auth/signup.css">
+    <style>
+        .card-wrapper {
+            position: relative;
+            width: 100%;
+            margin: 0;
+            -webkit-perspective: 800px;
+            perspective: 800px;
+        }
+
+
+        .card-wrapper .card-rotating .front {
+            z-index: 1;
+        }
+
+        .card-wrapper .card-rotating .face {
+            position: absolute;
+            z-index: 2;
+            width: 100%;
+            background: #fff;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        .card-wrapper .card-up {
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .card-wrapper .card-up img {
+            vertical-align: middle;
+        }
+
+        .card-img,
+        .card-img-top {
+            border-top-left-radius: calc(0.25rem - 1px);
+            border-top-right-radius: calc(0.25rem - 1px);
+        }
+
+        .card-img,
+        .card-img-top,
+        .card-img-bottom {
+            -ms-flex-negative: 0;
+            flex-shrink: 0;
+            width: 100%;
+        }
+
+        .card-wrapper .avatar {
+            display: block;
+            width: 120px;
+            margin-top: -60px;
+            overflow: hidden;
+        }
+
+        .card-wrapper .avatar img {
+            width: 100%;
+            background: none repeat scroll 0 0 #fff;
+            border: 5px solid #fff;
+        }
+
+        .rounded-circle {
+            border-radius: 50% !important;
+        }
+
+        .card-body {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-radius: 0 !important;
+        }
+
+        .card-body {
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 1.25rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+
+                    <img src="/img/logo.svg" class="w-60 mb-4">
+                </div>
+            </div>
+            <div class="row">
+                
+                
+                <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                    <form method="POST" action="/auth/signup" id="signupForm">
+                        <input type="hidden" name="_csrf" id="csrfToken" value="{{csrfToken}}">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                        <i class="fa fa-user text-muted"></i>
+                                    </span>
+                                </div>
+                                <input name="companyName" maxlength="80" id="companyName" type="text"
+                                    placeholder="Nome da companhia"
+                                    class="form-control bg-white border-left border-md" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                        <i class="fa fa-user text-muted"></i>
+                                    </span>
+                                </div>
+                                <input name="fantasyName" maxlength="80" id="fantasyName" type="text"
+                                    placeholder="Nome fantasia"
+                                    class="form-control bg-white border-left border-md" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                        <i class="fa fa-user text-muted"></i>
+                                    </span>
+                                </div>
+                                <input name="cnpj" maxlength="80" id="cnpj" type="number" placeholder="CNPJ"
+                                    class="form-control bg-white border-left border-md" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"
+                                style="background-color: #ed7e43; border-color: #   db763f;">
+                                Prosseguir
+                            </button>
+                        </div>
+                    </form>
+
+                    {{#if error}}
+                    <div class="alert alert-danger mt-2" role="alert">
+                        {{error}}
+                    </div>
+                    {{/if}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{!-- JS Content --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        $("#signupForm").submit(function (e) {
+            e.preventDefault();
+
+            axios({
+                method: 'post',
+                url: "/auth/signup/step2",
+                data: {
+                    companyName: $(`#companyName`).val(),
+                    fantasyName: $(`#fantasyName`).val(),
+                    CNPJ: $(`#cnpj`).val(),
+                    _csrf: $(`#csrfToken`).val(),
+                }
+            }).then((response) => {
+                var data = response.data;
+                if (data.success) {
+                    toastr.success('Prosseguindo para coleta de endereço...', 'Sucesso');
+                    setTimeout(() => {
+                        window.location.href = `/auth/signup/step3/${data.clientId}`;
+                    }, 3000);
+                } else {
+                    toastr.error(data.message, 'Erro!');
+                }
+            }, (error) => {
+                toastr.error(data.message, 'Erro!');
+            });
+
+        });
+
+    </script>
+</body>
+
+
+</html>

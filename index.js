@@ -2,10 +2,15 @@ const express = require("express");
 const keys = require("./config/keys");
 
 const bodyParser = require("body-parser");
-const compression = require("compression");
+const passport = require("passport");
+
 const cookieSession = require("cookie-session");
 const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
+
 const expressMongoDb = require('express-mongo-db');
+
+const flash = require('connect-flash');
 
 var app = express();
 app.set('env', 'development');
@@ -21,8 +26,13 @@ app.set("views", "src/views");
 app.set("view engine", ".hbs");
 app.engine(".hbs", require("./config/handlebars"));
 
-// Allow JSON parsing
+app.use(flash());
+app.use(cookieParser());
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '50mb' }));
+
+const csrfProtection = csrf({ cookie: true })
 
 app.use(
     cookieSession({
@@ -37,10 +47,15 @@ app.get(`/`, async(req, res) => {
     res.render(`landing`, { layout: null, questions: faq_questions });
 });
 
+// Inicializa serviço de autenticação passport
+require("./src/services/passport");
+app.use(passport.initialize());
+app.use(passport.session());
+
 // adminController definirá o comportamento da rota /admin (entende-se localhost:9000/admin)
 app.use("/admin", require("./src/controllers/adminController")(app));
-
 app.use("/client", require("./src/controllers/clientController")(app));
+app.use("/auth", require('./src/controllers/client/authController.js')(csrfProtection));
 
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => { console.log(`Listening on port`, PORT); })
