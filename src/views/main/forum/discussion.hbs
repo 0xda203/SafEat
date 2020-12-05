@@ -147,8 +147,18 @@
     }
 
     .replies {
-        padding-left: 10px;;
+        padding-left: 10px;
+        ;
     }
+
+    .btn-sm i {
+        font-size: 12px !important;
+    }
+
+    .note-editor {
+        border-radius: 5px;
+    }
+    
 </style>
 {{/section}}
 
@@ -157,7 +167,7 @@
         <div class="padd">
             <div class="row align-items-center text center text-md-left border" style="padding: 20px 20px;">
                 <div style="margin-bottom: 15px;">
-                    <h2><a href="/client/forum/">Discussões > </a>  {{postData.title}}</h2>
+                    <h2 style="font-size: 20px !important; font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;"><a href="/client/forum/">Discussões > </a> {{postData.title}}</h2>
                 </div>
                 <div class="col-12">
                     <div class="comment-box">
@@ -181,7 +191,8 @@
                                 <img src="/images/user-icon.jpg" class="img-fluid">
                             </span>
                             <span class="commenter-name">
-                                <a href="#">Usuário {{this.user}}</a> <span class="comment-time">às {{this.fdate}}</span>
+                                <a href="#">Usuário {{this.user}}</a> <span class="comment-time">às
+                                    {{this.fdate}}</span>
                             </span>
                             <p class="comment-txt more">{{{this.data}}}</p>
                             <div class="comment-meta">
@@ -244,7 +255,7 @@
                 var data = response.data;
                 if (data.success) {
                     toastr.success('Comentário adicionado com sucesso', 'Sucesso');
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.href(`/client/forum/discussions/{{postData._id}}#${data.id}`);
                     }, 1000);
                 } else {

@@ -20,6 +20,12 @@ module.exports = function(app) {
         res.redirect("/client/menu");
     });
 
+    clientRouter.get('/logout', async(req, res) => {
+        res.locals.user = null;
+        req.logOut();
+        res.redirect('/');
+    });
+
     // Define comportamento da rota "/menu" (entenda-se localhost:9000/client/menu)
     clientRouter.get("/menu", async(req, res) => {
         res.render("main/menu", {});

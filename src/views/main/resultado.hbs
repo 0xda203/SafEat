@@ -30,6 +30,12 @@
         fill: #ddd;
     }
 
+    .iconn {
+        position: absolute;
+        margin-left: 10px;
+        margin-top: 4px;
+    }
+
     .gauge .value {
         fill: #777;
         font-size: 1.5rem;
@@ -212,6 +218,14 @@
         padding: 15px 15px 80px;
     }
 
+    @media (min-width: 576px) {
+
+        .modal-dialog {
+            max-width: 700px !important;
+            margin: 1.75rem auto;
+        }
+    }
+
     /*Left*/
     .modal.left.fade .modal-dialog {
         left: -320px;
@@ -223,6 +237,19 @@
 
     .modal.left.fade.in .modal-dialog {
         left: 0;
+    }
+
+    .false {
+        background-color: #dc3545 !important;
+        border-radius: 5px !important;
+        color: white;
+    }
+
+    .true {
+        background-color: #28a745 !important;
+        border-radius: 5px !important;
+        color: white;
+
     }
 
     /*Right*/
@@ -310,7 +337,8 @@
                             resultado detalhadamente</a>
                     </div>
                     <div id="compare" class="text-center mt-3" data-aos="fade-up" data-aos-delay="3000">
-                        <a data-toggle="modal" data-target="#exampleModalCenter" class='btn btn-dark text-white btn-block'>Comparar
+                        <a href="/client/questionario/compare/{{testId}}"
+                            class='btn btn-dark text-white btn-block'>Comparar
                             resultado com estabelecimentos próximos</a>
                     </div>
                 </div>
@@ -377,9 +405,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {{#unless close}}<p style="color: #d6103b; font-weigth: bold; text-align: center;">Nenhum estabelecimento próximo</p>{{/unless}}
+                    {{#unless close}}<p style="color: #d6103b; font-weigth: bold; text-align: center;">Nenhum
+                        estabelecimento próximo</p>{{/unless}}
                     {{#each close}}
-                    <div class="card border-danger mb-3" >
+                    <div class="card border-danger mb-3">
                         <div class="card-body text-danger">
                             <h5 class="card-title">{{this.fantasyName}}</h5>
                             <p class="card-text">
@@ -416,13 +445,13 @@
 
                 <div class="modal-body">
                     {{#each right}}
-                    <div class="card mb-2">
-                        <div class="card-header">
-                            {{inc @index}} - {{this.question}}
+                    <div class="card" style="margin-bottom: 10px; !important">
+                        <div class="card-header true">
+                            {{this.question}}
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
-                                <p>{{this.wrongText}}</p>
+                                <p>{{this.rightText}}</p>
                             </blockquote>
                         </div>
                     </div>
@@ -442,18 +471,17 @@
                     <h4 class="modal-title" id="myModalLabel2">O que você está fazendo de errado</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-
                 </div>
 
                 <div class="modal-body">
                     {{#each wrong}}
-                    <div class="card mb-2">
-                        <div class="card-header">
-                            {{inc @index}} - {{this.question}}
+                    <div class="card" style="margin-bottom: 10px;">
+                        <div class="card-header false">
+                            {{this.question}}
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
-                                <p>{{this.rightText}}</p>
+                                <p>{{this.wrongText}}</p>
                             </blockquote>
                         </div>
                     </div>
