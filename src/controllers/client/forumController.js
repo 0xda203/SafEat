@@ -41,6 +41,8 @@ forumRouter.route('/discussions/:discussionId/new-reply')
         req.body.discussionId = req.params.discussionId;
         req.body.date = moment().toISOString();
         req.body.fdate = moment().format('DD/MM/YYYY [às] HH:mm');
+        req.body.usuario = req.user.username;
+        req.body.idUsuario = req.user._id;
 
         await req.db.collection('forum_posts_replies').insertOne(req.body);
 
@@ -53,6 +55,7 @@ forumRouter.route('/discussions/:discussionId/new-reply')
 
 forumRouter.route('/nova-discussao')
     .get(async(req, res) => {
+        console.log(req.user);
         var categories = await req.db.collection('forum_categories').find({}).toArray();
         res.render(`main/forum/novo-post`, {
             categories: categories
@@ -61,6 +64,8 @@ forumRouter.route('/nova-discussao')
         console.log(req.body);
         var data = req.body;
         data.replies = 0;
+        data.usuario = req.user.username;
+        data.idUsuario = req.user._id;
         data.date = moment().toISOString();
         data.fdate = moment().format('DD/MM/YYYY [às] HH:mm');
         await req.db.collection('forum_posts').insertOne(data);

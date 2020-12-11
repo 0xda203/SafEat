@@ -333,8 +333,7 @@
                     </div>
 
                     <div id="details" class="text-center mt-3" data-aos="fade-up" data-aos-delay="3000">
-                        <a href="/client/questionario/responder" class='btn btn-info text-white btn-block'>Entender
-                            resultado detalhadamente</a>
+                        <a href="/client/questionario/detailed/{{testId}}" class='btn btn-info text-white btn-block'>Visão detalhada</a>
                     </div>
                     <div id="compare" class="text-center mt-3" data-aos="fade-up" data-aos-delay="3000">
                         <a href="/client/questionario/compare/{{testId}}"
@@ -661,7 +660,7 @@
     $('#saida2').text(score({{ percentage }}));
     situacao({{ percentage }});
     setInterval(() => {
-        update({{ percentage }});
+        update(Math.round({{ percentage }}));
             }, 1000); 
         }, 2000); 
 

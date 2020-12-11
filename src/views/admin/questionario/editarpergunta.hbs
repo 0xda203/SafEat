@@ -63,6 +63,17 @@
             <option value="VF">Sim ou Não</option>
         </select>
     </div>
+
+    <div class="form-group">
+        <label for="class">Classificação</label>
+        <select name="class" class="form-control" id="class" required>
+            <option value="Lotação e distanciamento">Lotação e distanciamento</option>
+            <option value="Orientações e indicações">Orientações e indicações</option>
+            <option value="Higienização">Higienização</option>
+            <option value="Equipamentos e segurança">Equipamentos e segurança</option>
+        </select>
+    </div>
+
     <div id="type-wrapper" class="form-group">
         <label for="type">Tipo</label>
         <select name="type" class="form-control" id="type" required>
@@ -145,6 +156,7 @@
                     method: $(`#method`).val(),
                     rightText: $(`#rightText`).val(),
                     wrongText: $(`#wrongText`).val(),
+                    class: $(`#class`).val(),
                     type: $(`#type`).val(),
                     function: $('#additionalLogic').val(), // .replaceAll(`/n`, '')
                     hasDependency: $('#hasDependency').val() == "true" ? true : false,

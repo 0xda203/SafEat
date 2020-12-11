@@ -124,7 +124,6 @@
     p.comment-txt {
         font-size: 15px;
         border-bottom: 1px solid #ddd;
-        padding: 0px 0px 15px;
     }
 
     .comment-meta {
@@ -158,6 +157,12 @@
     .note-editor {
         border-radius: 5px;
     }
+
+    .avatar {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
     
 </style>
 {{/section}}
@@ -172,10 +177,10 @@
                 <div class="col-12">
                     <div class="comment-box">
                         <span class="commenter-pic">
-                            <img src="/images/user-icon.jpg" class="img-fluid">
+                            <img src="http://localhost:9000/client/user/avatar/{{postData.idUsuario}}" class="avatar">
                         </span>
                         <span class="commenter-name">
-                            <a href="#">Usuário</a> <span class="comment-time">às {{postData.fdate}}</span>
+                            <a href="#">{{postData.usuario}}</a> <span class="comment-time">às {{postData.fdate}}</span>
                         </span>
                         <p class="comment-txt more">{{{postData.data}}}</p>
                         <div class="comment-meta">
@@ -188,10 +193,10 @@
                         {{#each replies}}
                         <div class="comment-box" id='{{this._id}}' name="{{this._id}}">
                             <span class="commenter-pic">
-                                <img src="/images/user-icon.jpg" class="img-fluid">
+                                <img src="http://localhost:9000/client/user/avatar/{{this.idUsuario}}" class="avatar">
                             </span>
                             <span class="commenter-name">
-                                <a href="#">Usuário {{this.user}}</a> <span class="comment-time">às
+                                <a href="#">{{this.usuario}}</a> <span class="comment-time">às
                                     {{this.fdate}}</span>
                             </span>
                             <p class="comment-txt more">{{{this.data}}}</p>

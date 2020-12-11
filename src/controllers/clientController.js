@@ -31,6 +31,10 @@ module.exports = function(app) {
         res.render("main/menu", {});
     });
 
+    clientRouter.get("/user/avatar/:idUser", async(req, res) => {
+        res.redirect("https://picsum.photos/200/300");
+    });
+
     /*  Incorpora rotas de quizController em /src/controllers/client/quizController.js como subrotas de /client/questionario.*/
     clientRouter.use("/questionario", require('./client/quizController.js'));
     clientRouter.use("/forum", require('./client/forumController.js'));

@@ -88,6 +88,7 @@ quizRouter.route('/resultado/:testId')
             eval(`points += parseInt(${question.function}(questions, i));`); // computa resultado
 
             var c = Math.abs(p - points);
+            // console.log(questions[i].weight, c);
 
             if (question.weight != 0 && question.weight != c) wrong.push(question);
             else right.push(question);
@@ -95,12 +96,14 @@ quizRouter.route('/resultado/:testId')
 
         }
 
+        console.log(((100 * points) / totalWeight));
+
         res.render(`main/resultado`, {
             test: test,
             totalWeight: totalWeight,
             points: points,
             close: close,
-            percentage: (100 * points) / totalWeight,
+            percentage: Math.round((100 * points) / totalWeight),
             right: right,
             wrong: wrong,
             testId: req.params.testId
@@ -149,7 +152,7 @@ quizRouter.route('/compare/:testId')
 
         }
 
-        var px = Math.round((100 * points) / totalWeight, 2);
+        var px = Math.round((100 * points) / totalWeight);
 
         for (let i = 0; i < clients.length; i++) {
             var client2 = clients[i];
@@ -165,7 +168,6 @@ quizRouter.route('/compare/:testId')
             }
         }
 
-
         res.render(`main/compare`, {
             test: test,
             close: close,
@@ -175,6 +177,123 @@ quizRouter.route('/compare/:testId')
 
         });
 
+
+    })
+
+quizRouter.route('/detailed/:testId')
+    .get(async(req, res) => {
+        var test = await req.db.collection('tests').findOne({ _id: new ObjectId(req.params.testId) });
+
+        var categories = [{
+                name: "Lotação e distanciamento",
+                max: 0,
+                points: 0,
+                no: 0,
+                right: 0
+            },
+            {
+                name: "Orientação e indicações",
+                max: 0,
+                points: 0,
+                no: 0,
+                right: 0
+            },
+            {
+                name: "Higienização",
+                max: 0,
+                points: 0,
+                no: 0,
+                right: 0
+            },
+            {
+                name: "Equipamentos e segurança",
+                max: 0,
+                points: 0,
+                no: 0,
+                right: 0
+            }
+        ];
+
+        var questions = test.questions,
+            totalWeight = 0,
+            points = 0;
+
+        for (let i = 0; i < questions.length; i++) {
+            if (questions[i].ignored) continue;
+            if (i == 0 || i == 14) continue;
+
+            totalWeight += parseInt(questions[i].weight);
+
+            var question = await req.db.collection('questions').findOne({ _id: new ObjectId(questions[i]._id) });
+            let p = points + 0;
+            eval(`points += parseInt(${question.function}(questions, i));`); // computa resultado
+            var c = Math.abs(p - points);
+            let right = c == 0;
+
+
+            switch (question.class) {
+                case "Lotação e distanciamento":
+                    categories[0].max += parseInt(questions[i].weight);
+                    categories[0].points += c;
+                    categories[0].no++;
+                    if (right) categories[0].right++;
+                    break;
+                case "Orientações e indicações":
+                    categories[1].max += parseInt(questions[i].weight);
+                    categories[1].points += c;
+                    categories[1].no++;
+                    if (right) categories[1].right++;
+                    break;
+                case "Higienização":
+                    categories[2].max += parseInt(questions[i].weight);
+                    categories[2].points += c;
+                    categories[2].no++;
+                    if (right) categories[2].right++;
+                    break;
+                case "Equipamentos e segurança":
+                    categories[3].max += parseInt(questions[i].weight);
+                    categories[3].points += c;
+                    categories[3].no++;
+                    if (right) categories[3].right++;
+                    break;
+            }
+
+        }
+
+
+        var px = Math.round((100 * points) / totalWeight, 2);
+        console.log(px);
+
+
+        for (let i = 0; i < categories.length; i++) {
+            categories[i].wrong = categories[i].no - categories[i].right;
+            categories[i].percentage = Math.round((100 * categories[i].points) / categories[i].max);
+
+            categories[i].points = Math.round((100 * categories[i].points) / categories[i].max);
+            categories[i].max = Math.round((100 * categories[i].max) / totalWeight, 2);
+            categories[i].points = Math.round((categories[i].max * categories[i].points) / 100);
+
+            let note = "";
+            if (categories[i].percentage <= 30) {
+                note = `é muito ruim. Você deve tentar corrigir o quanto antes todos os aspectos que dizem respeito a ${categories[i].name}, ou isso continuará a diminuir sua nota.`;
+            } else if (categories[i].percentage >= 31 && categories[i].percentage <= 70) {
+                note = `é regular, o que significa que você está indo até que bem, mas pode melhorar muito para se destacar como um estabelecimento que preza por segurança.`;
+            } else if (categories[i].percentage >= 70 && categories[i].percentage <= 99) {
+                note = `é muito boa. Falta muito pouco para você alcançar um resultado excelente, portanto, continue se esforçando para manter o estado atual do seu restaurante e, quando por possível, acerte os tópicos faltantes.`;
+            } else if (categories[i].percentage == 100) {
+                note = `é excelente. Você está livre de preocupações acerca desse tópico.`;
+            }
+
+            categories[i].note = `Nessa categoria, você foi questionado acerca de ${categories[i].no} tópicos. Dessas, você teve um
+            desempenho de ${categories[i].percentage}%, que ${note}`;
+        }
+
+
+        res.render(`main/geral`, {
+            testId: req.params.testId,
+            value: px,
+            categories: categories
+        });
 
     })
 

@@ -1,0 +1,571 @@
+{{#section 'css'}}
+<link href="https://iamdanfox.github.io/anno.js/dist/anno.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
+
+<style>
+    * {
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .button {
+        height: 40px;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 170px;
+        cursor: pointer;
+    }
+
+    .button .button-w-icon {
+        display: flex;
+        align-items: center;
+    }
+
+    .button .button-w-icon span {
+        color: #009900 !important;
+    }
+
+    .button .button-w-icon img {
+        width: 10px;
+        margin-left: 5px;
+    }
+
+    .back-button {
+        display: flex;
+        cursor: pointer;
+        overflow: hidden;
+        height: 0;
+        transition: 500ms all;
+        padding-left: 5px;
+        margin-bottom: 10px;
+    }
+
+    .back-button.active {
+        height: 22px;
+    }
+
+    .back-button p {
+        margin: 0;
+        margin-left: 5px;
+        font-size: 16px !important;
+    }
+
+    .back-button img {
+        transition: 500ms all;
+    }
+
+    .back-button:hover img {
+        transform: translateX(-5px);
+    }
+
+    section {
+        padding-bottom: 20px;
+        width: 100%;
+        height: 100%;
+        display: flex;
+    }
+
+    section .grid {
+        width: 1050px;
+        margin: auto;
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        justify-content: space-between;
+    }
+
+    section .grid .score-wheel {
+        width: 320px;
+        height: 320px;
+        background-color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    section .grid .score-wheel .score-lines {
+        width: 300px;
+        height: 300px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+    }
+
+    section .grid .score-wheel .score-lines .score-pins {
+        position: absolute;
+        left: 50%;
+        top: 0%;
+        transform: translate(-50%, -5px);
+        width: 22px;
+        height: 22px;
+        z-index: 4;
+        transition: 1000ms all;
+    }
+
+    section .grid .score-wheel .score-lines .score-pins.hide {
+        opacity: 0;
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform-origin: 50% 155px;
+        transition: 2000ms all;
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin .pin-inner {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 50%;
+        background-color: #fff;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin .pin-inner:hover .pin-description {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin .pin-inner:hover:before {
+        transform: scale(1.2);
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin .pin-inner .pin-description {
+        position: absolute;
+        background-color: #fff;
+        padding: 5px;
+        left: 50%;
+        bottom: 100%;
+        margin-bottom: 10px;
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+        transition: 500ms all;
+        pointer-events: none;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin .pin-inner .pin-description:before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        left: 0;
+        top: 0;
+        z-index: 2;
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin .pin-inner .pin-description:after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        transform: translateX(-50%) rotate(45deg);
+        background-color: #fff;
+        left: 50%;
+        z-index: 1;
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin .pin-inner .pin-description p {
+        margin: 0;
+        white-space: nowrap;
+        font-size: 12px;
+        position: relative;
+        z-index: 3;
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin .pin-inner:after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 12px;
+        height: 12px;
+        background-size: cover;
+        transform: translate(-50%, -50%);
+        background-image: url(http://res.cloudinary.com/da32ibrgl/image/upload/v1526911159/minus_b5cdlv.svg);
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin .pin-inner:before {
+        content: "";
+        position: absolute;
+        left: 0%;
+        top: 0%;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: #fff;
+        transition: 500ms all;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin:nth-child(1):after {
+        position: relative;
+        content: 1;
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin:nth-child(2):after {
+        position: relative;
+        content: 2;
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin:nth-child(3):after {
+        position: relative;
+        content: 3;
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin:nth-child(4):after {
+        position: relative;
+        content: 4;
+    }
+
+    section .grid .score-wheel .score-lines .score-pins .pin:nth-child(5):after {
+        position: relative;
+        content: 5;
+    }
+
+    section .grid .score-wheel .score-lines svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    section .grid .score-wheel .score-lines svg circle {
+        fill: none;
+        stroke-width: 10px;
+        opacity: 1;
+        transform: rotate(-90deg);
+        transform-origin: 150px 150px;
+        transition: 2000ms all, 1000ms opacity;
+        stroke-dasharray: 911.061869541;
+        stroke-dashoffset: 911.061869541;
+    }
+
+    section .grid .score-wheel .score-lines svg circle.hide {
+        opacity: 0;
+    }
+
+    section .grid .score-wheel .score-lines svg circle.active {
+        opacity: 1;
+    }
+
+    section .grid .score-wheel .score-lines svg circle:nth-child(1) {
+        stroke: rgba(0, 0, 0, 0.025);
+    }
+
+    section .grid .score-wheel .score-lines svg circle:nth-child(2) {
+        stroke: #009900;
+    }
+
+    section .grid .score-wheel .score-lines svg circle:nth-child(3) {
+        stroke: #99cc00;
+    }
+
+    section .grid .score-wheel .score-lines svg circle:nth-child(4) {
+        stroke: #ffe600;
+    }
+
+    section .grid .score-wheel .score-lines svg circle:nth-child(5) {
+        stroke: #ff6600;
+    }
+
+    section .grid .score-wheel .score-lines svg circle:nth-child(6) {
+        stroke: #009ee0;
+    }
+
+    section .grid .score-wheel .score-values {
+        position: relative;
+        text-align: center;
+    }
+
+    section .grid .score-wheel .score-values .score-values-inner {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: 1000ms all;
+    }
+
+    section .grid .score-wheel .score-values .score-values-inner.active {
+        opacity: 1;
+    }
+
+    section .grid .score-wheel .score-values h2 {
+        font-size: 150px;
+        line-height: 0.9;
+        font-weight: 300;
+        color: #666666;
+        margin: 10px 0;
+        margin-left: -10px;
+        letter-spacing: -10px;
+    }
+
+    section .grid .score-wheel .score-values h4 {
+        line-height: 1.4;
+        font-size: 14px;
+        font-weight: 500;
+        color: #666666;
+        margin: 0;
+    }
+
+    section .grid .score-description {
+        width: 600px;
+    }
+
+    section .grid .score-description h2 {
+        font-size: 45px;
+        font-weight: 300;
+        margin: 0;
+        color: #fff;
+    }
+
+    section .grid .score-description p {
+        line-height: 1.4;
+        font-size: 18px;
+        color: #fff;
+    }
+
+    .header {
+        background-color: white;
+    }
+
+    .intro-section {
+        height: 100vh;
+        background-color: rgb(40, 165, 82);
+        padding-top: 120px;
+    }
+
+    #intro-section {
+        transition: background-color .5s ease-in-out;
+        -moz-transition: background-color .5s ease-in-out;
+        -webkit-transition: background-color .5s ease-in-out;
+        -o-transition: background-color .5s ease-in-out;
+    }
+
+    .background-shape::before {
+        content: "";
+    }
+
+    @media (max-width: 767px) {
+        .intro-section .container2 .txt {
+            padding-left: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        .intro-section .container2 .img {
+            display: none;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 1350px) {
+        .intro-section .container2 .text-area h1:nth-child(1) {
+            font-size: 2rem !important;
+        }
+
+    }
+
+    .intro-section .container2 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+{{/section}}
+
+<section id="intro-section" class="intro-section">
+    <div class="container2">
+        <section>
+            <div class="grid">
+                <div class="score-wheel">
+                    <div class="score-lines">
+                        <div class="score-pins">
+                            {{#each categories}}
+                            <div class="pin">
+                                <div class="pin-inner">
+                                    <div class="pin-description">
+                                        <p>{{this.name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+
+                        <svg viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="150" cy="150" r="145"> </circle>
+                            {{#each categories}}
+                            <circle data-score="{{this.points}}" cx="150" cy="150" r="145"> </circle>
+                            {{/each}}
+                        </svg>
+                    </div>
+                    <div class="score-values">
+                        <div class="score-values-inner active">
+                            <h4>Score alcançado</h4>
+                            <h2>80</h2>
+                            <h4>/100</h4>
+                        </div>
+                        {{#each categories}}
+                        <div class="score-values-inner">
+                            <h4>{{this.name}}</h4>
+                            <h2>{{this.points}}</h2>
+                            <h4>/{{this.max}}</h4>
+                        </div>
+                        {{/each}}
+
+                    </div>
+                </div>
+                <div class="score-description">
+                    <div class="back-button">
+                        <img src="http://res.cloudinary.com/da32ibrgl/image/upload/v1526915125/back-button_mc6tzf.svg"
+                            alt="">
+                        <p>Retornar</p>
+                    </div>
+                    <h2 id="title"></h2>
+                    <p id="text"></p>
+                    <div class="button">
+                        <div class="button-w-icon">
+                            <a href="/client/questionario/resultado/{{testId}}">
+                                <span>Retornar ao teste</span>
+                                <img src="http://res.cloudinary.com/da32ibrgl/image/upload/v1526902304/Arrow_e2gzeg.svg"
+                                    alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</section>
+
+{{#section 'jquery'}}
+<script src='https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+<script src="https://d3js.org/d3.v3.js"></script>
+<script src="https://iamdanfox.github.io/anno.js/dist/anno.js" type="text/javascript"></script>
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+
+<script>
+
+    function score(resultado) {
+        if (resultado <= 30) {
+            return { color: "#f94c4c", nota: "Seu score está ruim.", title: "Ruim" };
+        } else if (resultado >= 31 && resultado <= 70) {
+            return { color: "#faac23", nota: "Seu score está razoázel.", title: "Dá pra melhorar..." };
+        } else if (resultado >= 70 && resultado <= 99) {
+            return { color: "#74d66b", nota: "Seu score está ótimo.", title: "Muito bem!" };
+        } else if (resultado == 100) {
+            return { color: "#00af7d", nota: "Seu score está excelente.", title: "Excelente!" };
+        }
+    }
+
+    var resultado = score({{ this.value }});
+    $('#intro-section').css({ backgroundColor: resultado.color });
+    $('#title').text(resultado.title);
+    $('#text').text(resultado.nota + ' Clique em um dos pins ao lado para visualizar seu desempenho acerca de cada tópico.')
+
+    $(window).on("load", function () {
+
+        var radius = 145,
+            circleLength = 2 * Math.PI * radius;
+
+        function setupCircles() {
+            var lastVal = 0;
+            $(".score-lines")
+                .find("circle")
+                .each(function (i) {
+                    if (i === 0) {
+                        return;
+                    }
+
+                    var value = parseInt($(this).attr("data-score"), 10),
+                        newRotation = -90 + lastVal / 100 * 360;
+
+                    $(this).css({
+                        transform: "rotateZ(" + newRotation + "deg)",
+                        "stroke-dasharray": circleLength,
+                        "stroke-dashoffset": circleLength * (1 - value / 100)
+                    });
+
+                    var rotationVal = newRotation + value / 100 * 360 / 2;
+                    $(".pin:nth-child(" + i + ")")
+                        .css({
+                            transform: "rotate(" + (rotationVal + 90) + "deg)"
+                        });
+
+                    $(".pin:nth-child(" + i + ")").children()
+                        .css({
+                            transform: "rotate(" + ((rotationVal + 90) * -1) + "deg)"
+                        });
+
+                    lastVal += value;
+                });
+
+            $('.score-values-inner:nth-child(' + (1) + ')').find('h2').html(lastVal);
+        }
+
+        setupCircles();
+        var categories = {{{json categories}}};
+
+        $('.pin').on('click', function () {
+            var chosenVal = $(this).index(),
+                chosenCircle = $('.score-lines circle:nth-child(' + (chosenVal + 2) + ')');
+            var value = parseInt(chosenCircle.attr("data-score"), 10);
+
+
+            $('#title').text(categories[chosenVal].name);
+            $('#text').text(categories[chosenVal].note);
+
+
+            $('.score-values-inner').removeClass('active');
+            $('.score-lines circle').removeClass('active').addClass('hide');
+
+            chosenCircle.addClass('active').css({
+                transform: 'rotate(' + (-90) + 'deg)',
+                "stroke-dashoffset": circleLength * (1 - categories[chosenVal].points/categories[chosenVal].max)
+            });
+
+
+            $('.score-pins').addClass('hide');
+            $('.back-button').addClass('active');
+
+            setTimeout(function () {
+                $('.score-values-inner:nth-child(' + (chosenVal + 2) + ')').addClass('active').find('h2').html(value);
+            }, 1000);
+
+        });
+
+        $('.back-button').on('click', function () {
+
+            $('#intro-section').css({ backgroundColor: resultado.color });
+            $('#title').text(resultado.title);
+            $('#text').text(resultado.nota + ' Clique em um dos pins ao lado para visualizar seu desempenho acerca de cada tópico.')
+
+            $('.score-values-inner').removeClass('active');
+            $('.back-button').removeClass('active');
+            $('.score-lines circle').removeClass('active').removeClass('hide');
+
+            setTimeout(function () {
+                $('.score-values-inner:nth-child(' + (1) + ')').addClass('active');
+            }, 1000);
+            setupCircles();
+            $('.score-pins').removeClass('hide');
+        });
+    });
+
+</script>
+{{/section}}
