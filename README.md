@@ -11,7 +11,7 @@
 ![](platform.gif)
 
 ## Começando
-SafEat é uma plataforma de apoio que auxilia proprietários de bares e restaurantes no município de São Paulo a realizar a adequação às novas regras de funcionamento vigentes durante a quarentena através de apontamentos personalizados e, assim, de maneira prática, ajudar a diminuir o risco de contaminação dentro do ambiente e a reduzir a possibilidade de interdição por falta de cumprimento das regras.
+SafEat é uma plataforma de apoio que auxilia proprietários de bares e restaurantes no município de São Paulo a realizar a adequação às novas regras de funcionamento vigentes durante a quarentena através de apontamentos personalizados e, assim, de maneira prática, ajudar a diminuir o risco de contaminação dentro do ambiente e a reduzir a possibilidade de interdição por falta de cumprimento das regras. Trata-se de um trabalho destinado à disciplina de Resolução de Problemas II - RP2 na EACH/USP, supervisionado pela professora dra. Patrícia Rufino Oliveira.
 
 ## Funcionalidades
 São três as funcionalidades principais: FAQ, Fórum e Questionário para adequação.
@@ -36,9 +36,13 @@ npm install # instalar dependências
 node index.js # rodar a aplicação por padrão na porta 9000
 ```
 
+## Autores
+Caio Valverde Colaneri, Isabella Kuo, Gabriel Rodrigues Santos, Gabriel Kendy Faria Komatsu e Vinicius Yudi Nakamura.
+
 ## TODO
 1. Melhorar linguagem utilizada na aplicação, para parecer menos agressivo ao proprietário quando mostrar os resultados do questionário.
 2. Desenvolver termos de uso que devem ser aceitados para uso da aplicação.
 3. Desenvolver mecanismo para garantir autenticidade do usuário.
 4. Autenticação para painel administrativo.
 5. Adicionar configurações de perfil, incluíndo função para alterar visibilidade na tela de comparação de resultados para outros estabelecimentos.
+
