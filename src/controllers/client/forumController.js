@@ -55,13 +55,11 @@ forumRouter.route('/discussions/:discussionId/new-reply')
 
 forumRouter.route('/nova-discussao')
     .get(async(req, res) => {
-        console.log(req.user);
         var categories = await req.db.collection('forum_categories').find({}).toArray();
         res.render(`main/forum/novo-post`, {
             categories: categories
         });
     }).post(async(req, res) => {
-        console.log(req.body);
         var data = req.body;
         data.replies = 0;
         data.usuario = req.user.username;

@@ -229,7 +229,6 @@
         
         var currentQuestion = 0;
         var questions = {{{json questions}}};
-        console.log(questions);
         
         var progress = 0;
         var total = questions.length - questions.filter((item) => item.hasDependency == "true").length;

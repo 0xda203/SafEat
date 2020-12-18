@@ -49,7 +49,6 @@ module.exports = function(csrfProtection) {
     });
 
     authController.get('/signup/step2', csrfProtection, async(req, res) => {
-        console.log(req.session.temp);
         if (!req.session.temp) return res.redirect('/signup/step1');
         res.render(`main/auth/signup-2`, {
             layout: null,
@@ -103,9 +102,6 @@ module.exports = function(csrfProtection) {
         if (user)
             return res.send({ success: false, message: `CNPJ já cadastrado na base de dados.` });
         else {
-
-            console.log(req.body);
-
             var obj = req.session.temp;
             obj.companyName = req.body.companyName;
             obj.fantasyName = req.body.fantasyName;

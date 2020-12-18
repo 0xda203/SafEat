@@ -88,12 +88,9 @@ quizRouter.route('/resultado/:testId')
             eval(`points += parseInt(${question.function}(questions, i));`); // computa resultado
 
             var c = Math.abs(p - points);
-            // console.log(questions[i].weight, c);
 
             if (question.weight != 0 && question.weight != c) wrong.push(question);
             else right.push(question);
-
-
         }
 
         console.log(((100 * points) / totalWeight));
@@ -262,7 +259,6 @@ quizRouter.route('/detailed/:testId')
 
 
         var px = Math.round((100 * points) / totalWeight, 2);
-        console.log(px);
 
 
         for (let i = 0; i < categories.length; i++) {
